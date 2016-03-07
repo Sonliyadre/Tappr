@@ -24,7 +24,11 @@ var options = {
 app.use(express.static('public', options));
 
 app.get('/', function (req, res) {
-    res.sendfile(__dirname + '/index.html');
+    res.sendfile(__dirname + '/public/player/index.html');
+});
+
+app.get('/admin', function (req, res) {
+    res.sendfile(__dirname + '/public/admin/index.html');
 });
 
 http.listen(CONFIG.environment.port);
