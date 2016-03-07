@@ -5,5 +5,4 @@ DecodeMTL Final Project
 * ```npm install```
 
 ### NPM Commands
-* ```npm run backend```
-* ```npm run frontend```
+* ```npm run dev```

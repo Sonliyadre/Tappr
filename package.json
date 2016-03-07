@@ -4,8 +4,7 @@
   "description": "DecodeMTL Final Project",
   "main": "index.js",
   "scripts": {
-    "backend": "node_modules/.bin/nodemon --watch server server/app.js",
-    "frontend": "node_modules/.bin/nodemon --watch client client/app.js"
+    "dev": "node_modules/.bin/nodemon --watch . app.js"
   },
   "repository": {
     "type": "git",

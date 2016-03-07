@@ -27,7 +27,7 @@ app.get('/', function (req, res) {
     res.sendfile(__dirname + '/index.html');
 });
 
-http.listen(8080);
+http.listen(CONFIG.environment.port);
 
 io.sockets.on('connection', function(socket){
     console.log('Socket Connected', socket.id);
