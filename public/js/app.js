@@ -1,4 +1,4 @@
-var socket = io.connect("http://localhost:8888");
+var socket = io.connect(window.location.origin);
 
 socket.on('connect', function(){
     console.log('Connected');
