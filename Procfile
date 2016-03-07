@@ -1,1 +1,1 @@
-web: forever start client/app.js && forever start server/app.js
+web: forever app.js
