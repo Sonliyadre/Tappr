@@ -1,0 +1,21 @@
+{
+  "name": "tappr",
+  "version": "0.0.1",
+  "description": "DecodeMTL Final Project",
+  "main": "index.js",
+  "scripts": {
+    "backend": "node_modules/.bin/nodemon --watch server server/app.js",
+    "frontend": "node_modules/.bin/nodemon --watch client client/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nyanofthemoon/Tappr.git"
+  },
+  "author": "",
+  "homepage": "https://github.com/nyanofthemoon/Tappr#readme",
+  "dependencies": {
+    "forever": "^0.15.1",
+    "socket.io": "^1.4.5",
+    "socket.io-client": "^1.4.5"
+  }
+}
