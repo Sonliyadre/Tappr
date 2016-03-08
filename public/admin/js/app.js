@@ -6,6 +6,8 @@ var ReactDOM = require('react-dom');
 var AdminForm = require(__dirname + '/adminForm');
 var CountDown = require(__dirname + '/countDown');
 
+var SessionId = null;
+
 var App = React.createClass({
     getInitialState: function(){
         return {
@@ -13,7 +15,8 @@ var App = React.createClass({
                 username: null
             },
             status: 'loading',
-            socket: null
+            socket: io.connect(window.location.origin),
+            socketId: null
         };
     },
     /*
@@ -23,15 +26,20 @@ var App = React.createClass({
         });
     },*/
     componentDidMount: function(){
-        this.setState({
-            status: 'mounted',
-            socket: io.connect(window.location.origin)
+        var that = this;
+        this.state.socket.on('connect', function(){
+            that.setState({
+                status: 'mounted',
+                socketId: this.id
+            });
+            
         });
     }, 
     render: function(){
+        var socketId = this.state.socketId
         switch(this.state.status) {
             case "mounted":
-                return (<AdminForm handleSuccessfulAdminLogin={this.handleSuccessfulAdminLogin} handleFailedAdminLogin={this.handleFailedAdminLogin} />);
+                return (<AdminForm socketId={socketId} handleSuccessfulAdminLogin={this.handleSuccessfulAdminLogin} handleFailedAdminLogin={this.handleFailedAdminLogin} />);
             case "loggedIn":
                 return (<div>Logged In as {this.state.admin.username}</div>);
             default:
@@ -59,24 +67,7 @@ ReactDOM.render(<App />, document.getElementById('app'));
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 /*
-var socket = io.connect(window.location.origin);
-
-socket.on('connect', function(){
-    console.log('Connected');
-});
 
 socket.on('pong', function(data) {
     console.log('Received event pong with data: ', data);
@@ -84,5 +75,4 @@ socket.on('pong', function(data) {
 
 socket.on('disconnect', function(){
     console.log('Disconnected');
-});
-*/
+});*/

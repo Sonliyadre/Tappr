@@ -2,16 +2,20 @@ var React    = require('react');
 var ReactDOM = require('react-dom');
 
 var AdminForm = React.createClass({
+    getInitialState: function(){
+        console.log(this.props);
+        return {
+            socketId: this.props.socketId
+        }
+    },
     handleSubmit: function(event) {
         event.preventDefault();
         var username = this.refs.username.value;
         var password = this.refs.password.value;
-        
-        // VALIDATE USERNAME + PASSWORD IS VALID WITH POST REQUEST
-        //Il faut faire un AJAX post ==> demander à DRE la route (/admin/login)
-        
+        var socketId = this.props.socketId;
+
         var that = this;
-        var data = {'username': username,'password': password};
+        var data = {'username': username,'password': password, 'socketId': socketId};
              $.ajax({
                url: '/admin/login',
                type: 'POST',
