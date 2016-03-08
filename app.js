@@ -4,8 +4,11 @@ var CONFIG = require(__dirname + '/config');
 
 var express = require('express');
 var app     = express();
-var http    = require('http').createServer(app);
 
+var bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({ extended: false }));
+
+var http = require('http').createServer(app);
 var io = require('socket.io')();
 io.listen(http);
 
@@ -21,7 +24,21 @@ var options = {
     }
 };
 
+//@TODO When game ends, don't forget to regenrate the gameId
+var gameId  = generateUniqueGameId();
+
+var players = [];
+
 app.use(express.static('public', options));
+
+app.post('/admin/login', function (req, res) {
+    var isAuthenticated = false;
+    if (req.body.username == CONFIG.credentials.username && req.body.password == CONFIG.credentials.password) {
+        isAuthenticated = true;
+    }
+    
+    res.send({"authentication": isAuthenticated});
+}); 
 
 app.get('/admin', function (req, res) {
     res.sendFile(__dirname + '/public/admin/index.html');
@@ -31,11 +48,65 @@ app.get('/', function (req, res) {
     res.sendFile(__dirname + '/public/player/index.html');
 });
 
-http.listen(CONFIG.environment.port);
+io.on('connection', function(socket) {
 
-io.sockets.on('connection', function(socket){
     console.log('Socket Connected', socket.id);
+    socket.emit('debug', {'test': 'server'});
     
+    socket.on('error', function(data) {
+        console.log("Socket Error " + this.id);
+    });
+    
+    socket.on('disconnect', function(data) {
+        console.log("Socket Disconnected " + this.id);
+        for (var index in players) {
+            if (players[index].socket_id == this.id) {
+                console.log("Player Removed: " + players[index].name);
+                delete players[index];
+                break;
+            }
+        }
+
+    });
+    
+    socket.on('add_player', function(data) {
+        var isAlreadyInList = false;
+        for (var index in players) {
+            if (players[index].name == data.name) {
+                isAlreadyInList = true;
+                break;
+            }
+        }
+        
+        if (isAlreadyInList) {
+             console.log(players.name + " already exists");
+             socket.emit('add_player', {'addition': false, 'message': 'Already in list'});
+        } else {
+            players.push({name: data.name, socket_id: this.id});
+            socket.join(gameId);
+            socket.emit('add_player', {'addition': true, 'message': ''});
+        }
+    });
+    
+    // socket.on('check_login', function(data) {
+        
+    //     if (data.username == 'Sonia') {
+    //         console.log('OK!')
+    //     } else {
+    //         console.log('Imposter!!')
+    //     }
+        
+        
+    //     if (data.password == password) {
+    //         console.log("OK!")
+    //     } else {
+    //         console.log('Incorrect password, try again Sonia!')
+    //     }
+    // })
+        
+    
+    // console.log(socket);   
+    /*
     socket.on('ping', function(socket) {
         console.log('Sending Event To Socket ' + socket.id);
         socket.emit('pong', {});
@@ -53,9 +124,13 @@ io.sockets.on('connection', function(socket){
 
     // Example : Socket Joins a Channel
     socket.join('channelName');
-    socket.emit('connect-event', { some: 'data' });
+    socket.emit('connect-event', { some: 'data' });*/
 });
 
-io.sockets.on('disconnect', function() {
-    console.log('Socket Disconnected', this.id);
-});
+http.listen(CONFIG.environment.port);
+
+// Helper Functions //
+
+function generateUniqueGameId() {
+    return 'game' + new Date().getTime();
+}
