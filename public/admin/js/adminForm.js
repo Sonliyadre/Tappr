@@ -10,7 +10,8 @@ var AdminForm = React.createClass({
         // VALIDATE USERNAME + PASSWORD IS VALID WITH POST REQUEST
         //Il faut faire un AJAX post ==> demander à DRE la route (/admin/login)
         
-        var data = {'username':'','password':''};
+        var that = this;
+        var data = {'username': username,'password': password};
              $.ajax({
                url: '/admin/login',
                type: 'POST',
@@ -21,9 +22,9 @@ var AdminForm = React.createClass({
                  var credentialsAreValid = data.authentication;
         
                 if (credentialsAreValid) {
-                    this.props.handleSuccessfulAdminLogin(this.refs.username.value);
+                    that.props.handleSuccessfulAdminLogin(that.refs.username.value);
                 } else {
-                    this.props.handleFailedAdminLogin();
+                    that.props.handleFailedAdminLogin();
                 }
                      });
                      
