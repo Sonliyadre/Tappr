@@ -1,3 +1,5 @@
 bower_components
 node_modules
 npm-debug.log
+public/admin/js/app-bundle.js
+public/player/js/app-bundle.js
