@@ -1,12 +1,6 @@
-<<<<<<< HEAD
-var socket = io.connect(window.location.origin);
-=======
-// https://facebook.github.io/react/docs/component-specs.html
->>>>>>> a2377b145468aefebc9235c7a6fa7423152ba641
-
 var React = require('react');
 var ReactDOM = require('react-dom');
-
+  
 // var Store = require(__dirname + '/store');
 
 var App = React.createClass({
@@ -99,25 +93,3 @@ var App = React.createClass({
 
 
 ReactDOM.render(<App />, document.getElementById('app'));
-
-
-
-/*
-var socket = io.connect(window.location.origin);
-socket.on('connect', function(){
-    console.log('Connected');
-    socket.emit('add_player', {'name': 'hello'});
-});
-
-<<<<<<< HEAD
-socket.on('debug', function(data) {
-    console.log('Received event debug with data: ', data);
-});
-
-=======
-
-socket.on('disconnect', function(){
-    console.log('Disconnected');
-});
-*/
->>>>>>> a2377b145468aefebc9235c7a6fa7423152ba641
