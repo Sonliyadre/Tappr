@@ -44,6 +44,12 @@
 /* 0 */
 /***/ function(module, exports) {
 
+	
+
+
+
+
+
 	var socket = io.connect(window.location.origin);
 
 	socket.on('connect', function(){

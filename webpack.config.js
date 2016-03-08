@@ -8,7 +8,7 @@ module.exports = {
         path: __dirname + "/public"
     },
     module: {
-        loader: [{
+        loaders: [{
             test: /\.jsx?$/,
             exclude: /node_modules/,
             loader: "babel-loader",
