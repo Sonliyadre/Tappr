@@ -49,10 +49,11 @@ var App = React.createClass({
   
   handleSubmit: function(event){
     event.preventDefault();
-   this.setState({
+    var player = {
       player: this.state.input
-   });
-   this.state.socket.emit('add_player', this.state.player); 
+    };
+    this.state.socket.emit('add_player', this.state.player);
+    this.setState(player);
   },
   
   render: function(){
