@@ -6,7 +6,9 @@ var express = require('express');
 var app     = express();
 
 var bodyParser = require('body-parser');
+app.use (bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
 
 var http = require('http').createServer(app);
 var io = require('socket.io')();
@@ -30,6 +32,7 @@ var gameId  = generateUniqueGameId();
 var players = [];
 
 app.use(express.static('public', options));
+
 
 app.post('/admin/login', function (req, res) {
     var isAuthenticated = false;
@@ -74,12 +77,12 @@ io.on('connection', function(socket) {
         for (var index in players) {
             if (players[index].name == data.name) {
                 isAlreadyInList = true;
+                console.log(players.name + " already exists");
                 break;
             }
         }
         
         if (isAlreadyInList) {
-             console.log(players.name + " already exists");
              socket.emit('add_player', {'addition': false, 'message': 'Already in list'});
         } else {
             players.push({name: data.name, socket_id: this.id});
