@@ -33,11 +33,6 @@ app.use(express.static('public', options));
 
 app.post('/admin/login', function (req, res) {
     var isAuthenticated = false;
-    
-    
-    console.log(req);
-    
-
     if (req.body.username == CONFIG.credentials.username && req.body.password == CONFIG.credentials.password) {
         isAuthenticated = true;
     }
