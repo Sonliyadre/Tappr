@@ -44,17 +44,19 @@
 /* 0 */
 /***/ function(module, exports) {
 
-	   var socket = io.connect(window.location.origin);
+	'use strict';
 
-	socket.on('connect', function(){
+	var socket = io.connect(window.location.origin);
+
+	socket.on('connect', function () {
 	    console.log('Connected');
 	});
 
-	socket.on('pong', function(data) {
+	socket.on('pong', function (data) {
 	    console.log('Received event pong with data: ', data);
 	});
 
-	socket.on('disconnect', function(){
+	socket.on('disconnect', function () {
 	    console.log('Disconnected');
 	});
 

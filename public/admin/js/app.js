@@ -1,34 +1,77 @@
+// https://facebook.github.io/react/docs/component-specs.html
+
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var AdminForm = React.createClass({
-    render : function (){
-        return (
-        <div>
-            <h1>Tappr Admin</h1>
-            <form>
-            <p>
-              <label for="username">Username</label><br/>
-              <input type="password" ref="name" placeholder="Username" />
-              </p>
-              <p>
-              <label for="password">Username</label><br/>
-              <input type="password" ref="password" placeholder="Password" />
-              </p>
-              <input className="button" type="submit" value="SEND"/>
-            </form>
-            </div>
-            );
+var AdminForm = require(__dirname + '/adminForm');
+var CountDown = require(__dirname + '/countDown');
+
+var App = React.createClass({
+    getInitialState: function(){
+        return {
+            admin: {
+                username: null
+            },
+            status: 'loading',
+            socket: null
+        };
+    },
+    /*
+    componentWillMount: function(){
+        this.setState({
+            socket: io.connect(window.location.origin)
+        });
+    },*/
+    componentDidMount: function(){
+        this.setState({
+            status: 'mounted',
+            socket: io.connect(window.location.origin)
+        });
+    }, 
+    render: function(){
+        switch(this.state.status) {
+            case "mounted":
+                return (<AdminForm handleSuccessfulAdminLogin={this.handleSuccessfulAdminLogin} handleFailedAdminLogin={this.handleFailedAdminLogin} />);
+            case "loggedIn":
+                return (<div>Logged In as {this.state.admin.username}</div>);
+            default:
+                return (
+                    <div>App State Status {this.state.status} Is Not Defined</div>
+                );
+        }
+    },
+    
+    handleSuccessfulAdminLogin: function(username) {
+        this.setState({
+            admin: { username: username },
+            status: 'loggedIn'
+        });
+    },
+    handleFailedAdminLogin: function() {
+        this.setState({
+            admin: { username: null },
+            status: 'mounted'
+        });
     }
 });
 
-ReactDOM.render(<AdminForm />, document.querySelector('#app'));
+ReactDOM.render(<App />, document.getElementById('app'));
 
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+/*
 var socket = io.connect(window.location.origin);
 
 socket.on('connect', function(){
@@ -42,3 +85,4 @@ socket.on('pong', function(data) {
 socket.on('disconnect', function(){
     console.log('Disconnected');
 });
+*/
