@@ -1,0 +1,30 @@
+/*.time{
+    font-size: 100px;
+    color: #FFF;
+    background-color: #D7263D;
+    height: 130px;
+    width: 300px;
+    margin-left: 520px;
+    -moz-border-radius:75px;
+    -webkit-border-radius: 75px;
+    border-radius: 75px;
+    border: 10px solid #D7263D; 
+    
+}
+
+div{
+    padding-top: 25px;
+    padding-bottom: 30px;
+} 
+
+input {
+    font-size: 40px;
+    font-family: 'Lato', sans-serif;
+    border: 2px solid #D7263D;
+    background-color: #D7263D;
+    border-radius: 20px;
+    color: #FFF;
+    padding: 10px;
+    cursor: pointer;
+}
+*/

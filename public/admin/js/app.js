@@ -3,8 +3,8 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var AdminForm = require(__dirname + '/adminForm');
-var CountDown = require(__dirname + '/countDown');
+var AdminForm = require('./adminForm.js');
+var CountDown = require('./countDown.js');
 
 var SessionId = null;
 
@@ -35,20 +35,6 @@ var App = React.createClass({
             
         });
     }, 
-    render: function(){
-        var socketId = this.state.socketId
-        switch(this.state.status) {
-            case "mounted":
-                return (<AdminForm socketId={socketId} handleSuccessfulAdminLogin={this.handleSuccessfulAdminLogin} handleFailedAdminLogin={this.handleFailedAdminLogin} />);
-            case "loggedIn":
-                return (<div>Logged In as {this.state.admin.username}</div>);
-            default:
-                return (
-                    <div>App State Status {this.state.status} Is Not Defined</div>
-                );
-        }
-    },
-    
     handleSuccessfulAdminLogin: function(username) {
         this.setState({
             admin: { username: username },
@@ -60,6 +46,26 @@ var App = React.createClass({
             admin: { username: null },
             status: 'mounted'
         });
+    },
+    handleTimerSubmit: function(){
+      this.state.socket.emit('timer_start');
+    },
+    render: function(){
+        var socketId = this.state.socketId
+        switch(this.state.status) {
+            case "mounted":
+                return (<AdminForm socketId={socketId} handleSuccessfulAdminLogin={this.handleSuccessfulAdminLogin} handleFailedAdminLogin={this.handleFailedAdminLogin} />);
+            case "loggedIn":
+                return (
+                    <div>Logged In as {this.state.admin.username}
+                        <CountDown handleTimerSubmit={this.handleTimerSubmit} secondsRemaining="300"/>
+                    </div>
+                );
+            default:
+                return (
+                    <div>App State Status {this.state.status} Is Not Defined</div>
+                );
+        }
     }
 });
 
