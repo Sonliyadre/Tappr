@@ -9,7 +9,6 @@ var bodyParser = require('body-parser');
 app.use (bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-
 var http = require('http').createServer(app);
 var io = require('socket.io')();
 io.listen(http);
@@ -26,15 +25,14 @@ var options = {
     }
 };
 
-//@TODO When game ends, don't forget to regenrate the gameId
-var gameId  = generateUniqueGameId();
-var game_status = 'stopped';
+var gameId              = null;
+var leaderboardInterval = null;
+var game_status         = 'stopped';
 
-var players = [];
+var players         = [];
 var admin_socket_id = null;
 
 app.use(express.static('public', options));
-
 
 app.post('/admin/login', function (req, res) {
     var isAuthenticated = false;
@@ -88,7 +86,7 @@ io.on('connection', function(socket) {
         if (isAlreadyInList) {
              socket.emit('add_player', {'addition': false, 'message': 'Already in list'});
         } else {
-            players.push({name: data.name, socket_id: this.id});
+            players.push({name: data.name, socket_id: this.id, tap_count:0});
             socket.join(gameId);
             socket.emit('add_player', {'addition': true, 'message': 'Welcome!'});
         }
@@ -96,43 +94,66 @@ io.on('connection', function(socket) {
     
     socket.on('timer_start', function(data) {
         if (admin_socket_id === this.id && game_status === 'stopped') {
+                players     = [];
                 game_status = 'waiting';
-                gameId = generateUniqueGameId();
+                gameId      = generateUniqueGameId();
                 
-            setTimeout(function (){
+            setTimeout(function() {
                 game_status = 'started';
                 io.to(admin_socket_id).emit ('game_start');
                 io.to(gameId).emit('game_start');
-            }, 30000);
+                leaderboardInterval = setInterval(function() {
+
+                    var players_no_sockets = players.filter(function (el) {
+                        return el.name && el.tap_count;
+                    });
+                        
+                    //players_no_sockets.push({name:el.name, tap_count: el.tap_count});
+                    // @TODO go through all players and filter out socketId
+                    
+                  io.to(admin_socket_id).emit('tap_update', players_no_sockets); //NEED TO POPULATE THIS!! 
+                }, 1000);
+                
+                
+                // *****************************************************
+                //@NOTE Dre, I think 5000 is 5 seconds and not 5 minutes.
+                // 1000 = 1000 milliseconds or 1 second
+                
+                
+                //******************************************************
+                //@NOTE yes, this was done just for testing purposes - we will put it back to 300000 when we are ready to test fully
+            }, 5000);
         }
     
     });
     
+    
+    
+    
     socket.on('game_status', function(data) {
-        socket.emit('game_status', {status: game_status})
-    })
+        socket.emit('game_status', {status: game_status});
+    });
     
-    
-    
-    
-    // socket.on('check_login', function(data) {
+    socket.on('player_click', function(data) {
+        for (var index in players) {
+            if (players[index].name == data.name) {
+                players[index].tap_count++;
+                if (players[index].tap_count >= 100) {
+                    clearInterval(leaderboardInterval);
+                    socket.to(gameId).emit('game_stop');
+                    io.to(admin_socket_id).emit('game_stop');
+                }
+                
+                break;
+            }
+        }
         
-    //     if (data.username == 'Sonia') {
-    //         console.log('OK!')
-    //     } else {
-    //         console.log('Imposter!!')
-    //     }
         
+    });
         
-    //     if (data.password == password) {
-    //         console.log("OK!")
-    //     } else {
-    //         console.log('Incorrect password, try again Sonia!')
-    //     }
-    // })
-        
+
     
-    // console.log(socket);   
+       
     /*
     socket.on('ping', function(socket) {
         console.log('Sending Event To Socket ' + socket.id);
