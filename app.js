@@ -28,8 +28,10 @@ var options = {
 
 //@TODO When game ends, don't forget to regenrate the gameId
 var gameId  = generateUniqueGameId();
+var game_status = 'stopped';
 
 var players = [];
+var admin_socket_id = null;
 
 app.use(express.static('public', options));
 
@@ -38,6 +40,7 @@ app.post('/admin/login', function (req, res) {
     var isAuthenticated = false;
     if (req.body.username == CONFIG.credentials.username && req.body.password == CONFIG.credentials.password) {
         isAuthenticated = true;
+        admin_socket_id = req.body.socketId;
     }
     
     res.send({"authentication": isAuthenticated});
@@ -87,9 +90,30 @@ io.on('connection', function(socket) {
         } else {
             players.push({name: data.name, socket_id: this.id});
             socket.join(gameId);
-            socket.emit('add_player', {'addition': true, 'message': ''});
+            socket.emit('add_player', {'addition': true, 'message': 'Welcome!'});
         }
     });
+    
+    socket.on('timer_start', function(data) {
+        if (admin_socket_id === this.id && game_status === 'stopped') {
+                game_status = 'waiting';
+                gameId = generateUniqueGameId();
+                
+            setTimeout(function (){
+                game_status = 'started';
+                io.to(admin_socket_id).emit ('game_start');
+                io.to(gameId).emit('game_start');
+            }, 30000);
+        }
+    
+    });
+    
+    socket.on('game_status', function(data) {
+        socket.emit('game_status', {status: game_status})
+    })
+    
+    
+    
     
     // socket.on('check_login', function(data) {
         
@@ -118,6 +142,7 @@ io.on('connection', function(socket) {
     socket.on('channel-ping', function(socket) {
         console.log('Sending Event To All Sockets Joined Subscribed To Channel');
         socket.to('channelName').emit('channel-pong', {});
+        io.to(admin_socket_id).emit   TO SEND EVENT TO ADMIN
     });
     
     socket.on('broadcast-ping', function(socket) {
