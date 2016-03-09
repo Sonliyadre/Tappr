@@ -7,13 +7,13 @@ var App = React.createClass({
   getInitialState: function(){
     
     return {
-      player: {name: null}, 
+      player: {name: null, valid:false}, 
       status: 'loading',
       input: "",
       socket: null,
     };
   },
-  componentDidMount: function() {
+  componentWillMount: function(){
     if (window.WebSocket) {
       var socket = io.connect(window.location.origin)
       this.setState({
@@ -21,22 +21,48 @@ var App = React.createClass({
         socket: socket
       });
       socket.on('add_player', this.handleAddPlayerSocketEvent);
+      socket.on('game_start', this.handleStartGameSocketEvent);
+      socket.on('game_stop', this.handleEndGameSocketEvent);
+      socket.on('game_status', this.handleCheckGameStatus);
     } else {
       this.setState({
         status: 'incompatible'
       });
     }
   },
+  componentDidMount: function() {
+    //create a set interval to do a game_status check on whether someone can log in
+    setInterval(function(data){
+      this.state.socket.emit('game_status');
+    }, 5000);
+  },
+  handleCheckGameStatus: function(data){
+     if (data.status === 'started'){
+        this.setState({
+          status:'game_already_started'
+        });
+      }
+      else if (data.status === 'waiting'){
+        this.setState({
+          status: 'login'
+        });
+      }
+      else {
+        this.setState({
+          status: 'game_stopped'
+        })
+      }
+  },
   handleAddPlayerSocketEvent: function(data) {
     if (data.addition === true) {
-     this.handleSubmit;
      this.setState({
        status:'waiting'
      });
     }
     else {
       this.setState({
-        status: 'bad_name'
+        status: 'bad_name',
+        player: {name: this.state.player.name, valid:true}
       });
     }
   },
@@ -46,20 +72,52 @@ var App = React.createClass({
       
     });
   },
-  
+
   handleSubmit: function(event){
     event.preventDefault();
     var player = {
       player: this.state.input
     };
     this.state.socket.emit('add_player', this.state.player);
+    
     this.setState(player);
+  },
+  handleStartGameSocketEvent: function(data){
+    if (data.started === true){
+      this.setState({
+        status: 'game_started'
+      });
+    }
+  },
+  handleTap: function(event){
+    event.preventDefault();
+    this.state.socket.emit('player_click');
+  },
+  handleEndGameSocketEvent: function(data){
+    if (data.winner === true){
+      this.setState({
+        status: 'game_winner'
+      });
+    }
+    else {
+      this.setState({
+        status: 'game_loser'
+      });
+    }
   },
   
   render: function(){
-    //check status
+    //check status of browser
     if (this.state.status === 'incompatible') {
       alert("Ruh Roh! It don't werk! Try a more modern browser.");
+    }
+    // check if game has already started
+    if (this.set.status === 'game_already_started'){
+      return (
+        <div>
+          <h1>Sorry! The game has already started. Wait here for the next game to start.</h1>
+        </div>
+        );
     }
     //login form
     if (this.state.status === 'login'){
@@ -88,9 +146,31 @@ var App = React.createClass({
         </div>
         );
     }
-    return (<div>{this.state.status}</div>);
+    //game started - tap screen
+    if (this.state.status === 'game_started'){
+      return (
+        <div>
+          <button className = 'tap_button' onClick={this.handleTap}>Tap Me!</button>
+        </div>
+        );
+    }
+    // game winner
+    if (this.state.status === 'game_winner'){
+      return (
+        <div>
+          <h1>Winner! Winner! Chicken Dinner!</h1>
+        </div>
+        );
+    }
+    //game losers
+    if (this.state.status === 'game_loser'){
+      return (
+        <div>
+          <h1>Not fast enough! You lose!</h1>
+        </div>
+        );
+    }
   }
 });
-
 
 ReactDOM.render(<App />, document.getElementById('app'));
