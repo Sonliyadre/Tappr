@@ -7,3 +7,4 @@ DecodeMTL Final Project
 ### NPM Commands
 * ```npm run dev```
 * ```npm run webpack```
+* ```npm run dist```
