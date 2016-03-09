@@ -16,7 +16,9 @@ var App = React.createClass({
             },
             status: 'loading',
             socket: io.connect(window.location.origin),
-            socketId: null
+            socketId: null,
+            leaderBoard: [],
+            game_start: false
         };
     },
     /*
@@ -27,14 +29,34 @@ var App = React.createClass({
     },*/
     componentDidMount: function(){
         var that = this;
+        
         this.state.socket.on('connect', function(){
             that.setState({
                 status: 'mounted',
                 socketId: this.id
             });
             
+        //listen for game_start
+        this.state.socket.on('game_start', function(data){
+            console.log(data);
+        })
+        
+        //listen for tap_update
+        this.state.socket.on('tap_update', function(data){
+        console.log(data);
+        
+            this.setState({
+                leaderBoard: data
+            })
+        })
+            
         });
-    }, 
+    },
+    startGame: function (time){
+        if(time === 0){
+            this.setState({game_start: true, status: "leaderBoard"})
+        }
+    },
     handleSuccessfulAdminLogin: function(username) {
         this.setState({
             admin: { username: username },
@@ -57,10 +79,17 @@ var App = React.createClass({
                 return (<AdminForm socketId={socketId} handleSuccessfulAdminLogin={this.handleSuccessfulAdminLogin} handleFailedAdminLogin={this.handleFailedAdminLogin} />);
             case "loggedIn":
                 return (
-                    <div>Logged In as {this.state.admin.username}
-                        <CountDown handleTimerSubmit={this.handleTimerSubmit} secondsRemaining="300"/>
+                    <div>{/*Logged In as {this.state.admin.username}*/}
+                        <CountDown startGame={this.startGame} handleTimerSubmit={this.handleTimerSubmit} secondsRemaining="300"/>
                     </div>
                 );
+                case "leaderBoard":
+                    return (
+                        <div>
+                        <LeaderBoard scores={this.state.leaderBoard} />
+                        </div>
+                        
+                        );
             default:
                 return (
                     <div>App State Status {this.state.status} Is Not Defined</div>
