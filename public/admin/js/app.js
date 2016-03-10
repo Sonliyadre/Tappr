@@ -2,9 +2,11 @@
 
 var React = require('react');
 var ReactDOM = require('react-dom');
+var BarChart = require("react-chartjs").bar;
 
 var AdminForm = require('./adminForm.js');
 var CountDown = require('./countDown.js');
+var LeaderBoard = require('./leaderBoard.js');
 
 var SessionId = null;
 
@@ -21,12 +23,6 @@ var App = React.createClass({
             game_start: false
         };
     },
-    /*
-    componentWillMount: function(){
-        this.setState({
-            socket: io.connect(window.location.origin)
-        });
-    },*/
     componentDidMount: function(){
         var that = this;
         
@@ -39,7 +35,9 @@ var App = React.createClass({
         });
         //listen for game_start
         this.state.socket.on('game_start', function(data){
-            console.log(data);
+            that.setState({
+                status: 'leaderBoard'
+            })
         });
         
         //listen for tap_update
@@ -57,7 +55,9 @@ var App = React.createClass({
            
        //listen for game_stop
        this.state.socket.on('game_stop', function(data){
-           that.state.status= 'stop';
+           that.setState({
+               status: 'stop'
+           })
            setTimeout(function(){
                that.state.socket.emit('tap_update');
            },1000)
@@ -99,7 +99,7 @@ var App = React.createClass({
                 case "leaderBoard":
                     return (
                         <div>
-                        <LeaderBoard scores={this.state.leaderBoard} />
+                         <LeaderBoard scores={this.state.leaderBoard}/>   
                         </div>
                         
                         );
@@ -110,6 +110,7 @@ var App = React.createClass({
         }
     }
 });
+
 
 ReactDOM.render(<App />, document.getElementById('app'));
 

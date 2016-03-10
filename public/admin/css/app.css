@@ -28,3 +28,18 @@ input {
     cursor: pointer;
 }
 */
+
+.leaderboard {
+    display: flex;
+    height: 300px;
+    align-items: flex-end;
+    border: 2px solid blue;
+}
+
+.leaderboard > div{
+    flex: 1;
+    border: 2px solid red;
+    transition: height 300ms ease-in;
+    background-color: #0B7A75;
+    font-family: 'Lato', sans-serif;
+}
