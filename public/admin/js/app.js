@@ -35,26 +35,39 @@ var App = React.createClass({
                 status: 'mounted',
                 socketId: this.id
             });
-            
+
+        });
         //listen for game_start
         this.state.socket.on('game_start', function(data){
             console.log(data);
-        })
+        });
         
         //listen for tap_update
-        this.state.socket.on('tap_update', function(data){
-        console.log(data);
-        
-            this.setState({
-                leaderBoard: data
-            })
-        })
+       this.state.socket.on('tap_update', function(data){
+       console.log(data);
+       if (that.state.status != 'stop'){
+           that.setState({
+               leaderBoard: data
+           });
+       }
+       else {
+           console.log('last information');
+       }
+       });
+           
+       //listen for game_stop
+       this.state.socket.on('game_stop', function(data){
+           that.state.status= 'stop';
+           setTimeout(function(){
+               that.state.socket.emit('tap_update');
+           },1000)
+               
+       });
             
-        });
     },
     startGame: function (time){
         if(time === 0){
-            this.setState({game_start: true, status: "leaderBoard"})
+            this.setState({game_start: true, status: "leaderBoard"});
         }
     },
     handleSuccessfulAdminLogin: function(username) {
@@ -73,14 +86,14 @@ var App = React.createClass({
       this.state.socket.emit('timer_start');
     },
     render: function(){
-        var socketId = this.state.socketId
+        var socketId = this.state.socketId;
         switch(this.state.status) {
             case "mounted":
                 return (<AdminForm socketId={socketId} handleSuccessfulAdminLogin={this.handleSuccessfulAdminLogin} handleFailedAdminLogin={this.handleFailedAdminLogin} />);
             case "loggedIn":
                 return (
                     <div>{/*Logged In as {this.state.admin.username}*/}
-                        <CountDown startGame={this.startGame} handleTimerSubmit={this.handleTimerSubmit} secondsRemaining="300"/>
+                        <CountDown startGame={this.startGame} handleTimerSubmit={this.handleTimerSubmit} secondsRemaining="10"/>
                     </div>
                 );
                 case "leaderBoard":
