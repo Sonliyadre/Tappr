@@ -135,7 +135,7 @@ io.on('connection', function(socket) {
                     console.log('Incremented tap count for ' + players[index].name + ' by ' + tapIncrement);
                     
                     // Lasting Effects
-                    if (Math.floor(Math.random()*100) == 25) {
+                    if (Math.floor(Math.random()*CONFIG.game.effectLastingChance) == 25) {
                         var randomEffect        = getRandomLastingEffect();
                         var randomEffectTimeout = getRandomLastingEffectTimeout();
 
@@ -168,7 +168,7 @@ io.on('connection', function(socket) {
                     }
 
                     // Instant Effects
-                    if (Math.floor(Math.random()*500) == 50) {
+                    if (Math.floor(Math.random()*CONFIG.game.effectInstantChance) == 50) {
                         var randomEffect = getRandomInstantEffet();
                         switch(randomEffect) {
                             case 'half':

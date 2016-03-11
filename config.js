@@ -14,6 +14,8 @@ module.exports = {
         intervalTimer:       process.env.INTERVAL_TIMER       || 10000,
         effectMinimumTime:  2500,
         effectAdditionTime: 2500,
+        effectLastingChance: 100,
+        effectInstantChance: 500,
 
         status: {
             STARTED: 'started',
