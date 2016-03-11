@@ -91,7 +91,7 @@ io.on('connection', function(socket) {
             socket.emit(CONFIG.game.event.PLAYER_ADD, {'addition': true, 'message': 'Welcome!'});
         }
     });
-    
+
     socket.on(CONFIG.game.event.GAME_START_TIMER, function(data) {
         if (admin_socket_id === this.id && game_status === CONFIG.game.status.STOPPED) {
             players     = [];
@@ -130,16 +130,16 @@ io.on('connection', function(socket) {
                         tapIncrement = 2;
                     } else {
                         tapIncrement = 1;
-                    }
+                    }  
                     players[index].tap_count = players[index].tap_count + tapIncrement;
                     console.log('Incremented tap count for ' + players[index].name + ' by ' + tapIncrement);
                     
                     // Lasting Effects
-                    if (Math.floor(Math.random()*CONFIG.game.effectLastingChance) == 25) {
+                    if (Math.floor(Math.random()*CONFIG.game.effectLastingChance) == 5) {
                         var randomEffect        = getRandomLastingEffect();
                         var randomEffectTimeout = getRandomLastingEffectTimeout();
-
-                        players[index].power_ups.push(randomEffect);
+                        console.log('Sending lasting effect ' + randomEffect + ' to ' + players[index].name);
+                        players[index].effects.push(randomEffect);
                         socket.emit(CONFIG.game.event.PLAYER_EFFECT_LASTING, {
                             type:   randomEffect,
                             status: 'active'
@@ -149,11 +149,14 @@ io.on('connection', function(socket) {
                             type:   randomEffect, 
                             status: 'active'
                         });
+                        
+                        console.log('Starting effect timeout for ' + randomEffect + ' for ' + players[index]);
                         setTimeout(function() {
-                            players[index].power_ups.push(randomEffect);
-                            var effectIndex = players[index].power_ups.indexOf(randomEffect);
+                            console.log('Stopping lasting effect for ' + randomEffect + ' for ' + players[index]);
+                            
+                            var effectIndex = players[index].effects.indexOf(randomEffect);
                             if(effectIndex != -1) {
-                                players[index].power_ups.splice(effectIndex, 1);
+                                players[index].effects.splice(effectIndex, 1);
                             }
                             socket.emit(CONFIG.game.event.PLAYER_EFFECT_LASTING, {
                                 type:   randomEffect, 
@@ -168,8 +171,9 @@ io.on('connection', function(socket) {
                     }
 
                     // Instant Effects
-                    if (Math.floor(Math.random()*CONFIG.game.effectInstantChance) == 50) {
+                    if (Math.floor(Math.random()*CONFIG.game.effectInstantChance) == 5) {
                         var randomEffect = getRandomInstantEffet();
+                        console.log('Sending instant effect ' + randomEffect + ' to ' + players[index].name);
                         switch(randomEffect) {
                             case 'half':
                                 tapIncrement = Math.floor(players[index].tap_count / 2);

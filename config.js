@@ -9,13 +9,13 @@ module.exports = {
     },
 
     game: {
-        maxTap:              process.env.MAX_TAP              || 10,
-        intervalLeaderboard: process.env.INTERVAL_LEADERBOARD || 1000,
+        maxTap:              process.env.MAX_TAP              || 1000,
+        intervalLeaderboard: process.env.INTERVAL_LEADERBOARD || 500,
         intervalTimer:       process.env.INTERVAL_TIMER       || 10000,
         effectMinimumTime:  2500,
         effectAdditionTime: 2500,
         effectLastingChance: 100,
-        effectInstantChance: 500,
+        effectInstantChance: 100,
 
         status: {
             STARTED: 'started',

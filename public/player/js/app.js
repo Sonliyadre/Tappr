@@ -62,7 +62,8 @@ var App = React.createClass({
      if (data.status === 'stopped'){
           this.state.socket.emit('tap_update', {});
           this.setState({
-            status: 'game_ended'
+            status: 'game_ended',
+            effectStatus: []
           });
      }
     }
@@ -100,7 +101,6 @@ var App = React.createClass({
   },
   //When I receive the notification from the server, the game will begin
   handleStartGameSocketEvent: function(data){
-    console.log('received start game with ', data);
     if (data === 'game_start'){
       this.setState({
         status: 'started'
@@ -117,13 +117,15 @@ var App = React.createClass({
   
   // Effect Lasting Power ups
   handleEffectLasting: function(data){
-    if (data.type.status === 'active') {
+    if (data.status === 'active') {
+      console.log(data.type + ' is now active');
       var newEffectStatus = this.state.effectStatus;
       newEffectStatus.push(data.type);
       this.setState({
         effectStatus: newEffectStatus
       });
     } else {
+      console.log(data.type + ' is now inactive');
       var effectIndex = this.state.effectStatus.indexOf(data.type);
       if (effectIndex != -1) {
         var newEffectStatus = this.state.effectStatus;
@@ -147,17 +149,16 @@ var App = React.createClass({
         var effectIndex = that.state.effectStatus.indexOf(data.type);
         if (effectIndex != -1) {
           delete newEffectStatus[effectIndex];
+          that.setState({
+            effectStatus: newEffectStatus
+          });
         }
-        that.setState({
-          effectStatus: newEffectStatus
-        }, 1000);
-      });
+      }, 1000);
   },
   
  // Determines winner of game and announces on the device
   handleGameWinner: function(data){
     if (this.state.status == 'game_ended' && this.state.calculated === false) {
-      console.log('we are here ' + this.state.status + ' ' + this.state.calculated);
       var myTapCount = 0;
       var maxTapCount = 0;
       for (var index in data){
@@ -224,36 +225,23 @@ var App = React.createClass({
         );
     }
     //game started tap game
-    if (this.state.status === 'started' || this.state.effectStatus === 'dblTapInactive' || this.state.effectStatus === 'freezeInactive'){
-      return (
-        <div>
-          <button className = 'tap_button' onClick={this.handleTap}>Tap Me!</button>
-        </div>
+    if (this.state.status === 'started'){
+        var buttonString = 'Tap Me!';
+        if (this.state.effectStatus.indexOf('freeze') !== -1){
+          buttonString = 'Freeze!'
+        } else if (this.state.effectStatus.indexOf('half') !== -1){
+          buttonString = 'Lost half your taps!'
+        } else if (this.state.effectStatus.indexOf('leech') !== -1){
+          buttonString = 'Leech!'
+        } else if (this.state.effectStatus.indexOf('dbltap') !== -1){
+          buttonString = 'Double Tap'
+        }
+        return (
+          <div>
+            <button className = {this.state.effectStatus.concat(['tap_button']).join(' ')} onClick={this.handleTap}>{buttonString}</button>
+          </div>
         );
     }
-    //POWER UPS
-    if(this.state.effectStatus.length > 0){
-      var buttonString = 'Click me!';
-      if (this.state.effectStatus.indexOf('dbltap') !== -1){
-        buttonString = 'Double Tap'
-      }
-      if (this.state.effectStatus.indexOf('freeze') !== -1){
-        buttonString = 'Freeze!'
-      }
-      if (this.state.effectStatus.indexOf('half') !== -1){
-        buttonString = 'Lost half your taps!'
-      }
-      if (this.state.effectStatus.indexOf('leech') !== -1){
-        buttonString = 'Leech!'
-      }
-      return (
-        <div>
-          <button className = {this.state.effectStatus.join(' ')} onClick={this.handleTap}>{buttonString}</button>
-        </div>
-        );
-    }
-    
-
         // game winner
     if (this.state.substatus === 'game_winner'){
       return (
