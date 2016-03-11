@@ -48,7 +48,7 @@ app.get('/admin', function (req, res) {
     res.sendFile(__dirname + '/public/admin/index.html');
 });
 
-app.get('/', function (req, res) {
+app.get('/*', function (req, res) {
     res.sendFile(__dirname + '/public/player/index.html');
 });
 
