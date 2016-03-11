@@ -200,23 +200,26 @@ var App = React.createClass({
     //login form
     if (this.state.status === 'login'){
       return (
-        <form className="login">
-            <input className="login_Name" type="text" onChange={this.handleChange} value={this.state.input}/>
-            <button className='login' onClick={this.handleSubmit}>Play!</button>
-        </form>
+        <div>
+          <h2>Pick a name, any name.</h2>
+          <form className="login">
+              <input className="login_Name" type="text" onChange={this.handleChange} value={this.state.input}/>
+              <button className='login' onClick={this.handleSubmit}>Play!</button>
+          </form>
+        </div>
         );
     }
     //waiting page
     if (this.state.status === 'waiting'){
       return (
-        <div>Hold your horses!</div>
+        <h1>Hang tight! The game will start soon.</h1>
         );
     }
     // bad username
     if (this.state.status === 'bad_name'){
       return (
         <div>
-          <h1>Sorry! That name is already taken!</h1>
+          <h2>Sorry! That name is already taken! Try being more original.</h2>
           <form className="login">
               <input className="login_Name" type="text" onChange={this.handleChange} value={this.state.input}/>
               <button className='login' onClick={this.handleSubmit}>Play!</button>
@@ -226,15 +229,15 @@ var App = React.createClass({
     }
     //game started tap game
     if (this.state.status === 'started'){
-        var buttonString = 'Tap Me!';
+        var buttonString = 'Tapity tap tap!';
         if (this.state.effectStatus.indexOf('freeze') !== -1){
-          buttonString = 'Freeze!'
+          buttonString = "You're frozen! Tappy no worky."
         } else if (this.state.effectStatus.indexOf('half') !== -1){
-          buttonString = 'Lost half your taps!'
+          buttonString = "Goodbye taps! Half your taps are lost"
         } else if (this.state.effectStatus.indexOf('leech') !== -1){
-          buttonString = 'Leech!'
+          buttonString = "Someone's stolen your tap!"
         } else if (this.state.effectStatus.indexOf('dbltap') !== -1){
-          buttonString = 'Double Tap'
+          buttonString = 'Double time!'
         }
         return (
           <div>
