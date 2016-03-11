@@ -92,7 +92,7 @@ io.on('connection', function(socket) {
         }
     });
     
-    socket.on('timer_start', function(data) {
+    socket.on(CONFIG.game.event.GAME_START_TIMER, function(data) {
         if (admin_socket_id === this.id && game_status === CONFIG.game.status.STOPPED) {
             players     = [];
             game_status = CONFIG.game.status.WAITING;
