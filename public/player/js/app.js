@@ -6,6 +6,8 @@ var App = React.createClass({
     return {
       player: {name: null, valid:false}, 
       status: 'loading',
+      substatus: 'none',
+      calculated: true,
       input: "",
       socket: null
     };
@@ -15,8 +17,8 @@ var App = React.createClass({
       var socket = io.connect(window.location.origin)
       socket.on('add_player', this.handleAddPlayerSocketEvent);
       socket.on('game_start', this.handleStartGameSocketEvent);
-      socket.on('game_stop', this.handleEndGameSocketEvent);
       socket.on('game_status', this.handleCheckGameStatus);
+      socket.on('tap_update', this.handleGameWinner);
       this.setState({
         status: 'login',
         socket: socket
@@ -55,16 +57,10 @@ var App = React.createClass({
         });
       }
      if (data.status === 'stopped'){
-        if (this.state.status === 'started') {
+          this.state.socket.emit('tap_update', {});
           this.setState({
             status: 'game_ended'
           });
-        }
-        else {
-          this.setState({
-            status: 'game_stopped'
-          });
-        }
      }
     }
   },
@@ -72,13 +68,14 @@ var App = React.createClass({
   handleAddPlayerSocketEvent: function(data) {
     if (data.addition === true) {
      this.setState({
-       status:'waiting'
+       status:'waiting',
+       player: {name: this.state.player.name, valid:true},
+       calculated: false
      });
     }
     else {
       this.setState({
-        status: 'bad_name',
-        player: {name: this.state.player.name, valid:true}
+        status: 'bad_name'
       });
     }
   },
@@ -95,9 +92,8 @@ var App = React.createClass({
     var player = {
       name: this.state.input
     };
-    console.log(player)
     this.state.socket.emit('add_player', player);
-    this.setState(player);
+    this.setState({ player: player });
   },
   //When I receive the notification from the server, the game will begin
   handleStartGameSocketEvent: function(data){
@@ -113,25 +109,33 @@ var App = React.createClass({
     event.preventDefault();
     this.state.socket.emit('player_click');
   },
-  //When I am told the game is over, I'll display who the game winner and losers are depending on the info I receive y
-  handleEndGameSocketEvent: function(data){
-    if (data === 'game_stop'){
-      this.setState({
-        status: 'game_ended'
-      });
-    //   if (data.winner === true){
-    //   this.setState({
-    //     status: 'game_winner'
-    //   });
-    // }
-    // else {
-    //   this.setState({
-    //     status: 'game_loser'
-    //   });
-    // }
+ 
+  handleGameWinner: function(data){
+    if (this.state.status == 'game_ended' && this.state.calculated === false) {
+      console.log('we are here ' + this.state.status + ' ' + this.state.calculated);
+      var myTapCount = 0;
+      var maxTapCount = 0;
+      for (var index in data){
+        if (data[index].name == this.state.player.name) {
+          myTapCount = data[index].tap_count;
+        }
+        if (maxTapCount < data[index].tap_count) {
+          maxTapCount = data[index].tap_count;
+        }
+      }
+      if (myTapCount >= maxTapCount){
+        this.setState({
+          substatus: 'game_winner',
+          calculated: true
+        });
+      }
+      else {
+        this.setState({
+          substatus: 'game_loser',
+          calculated: true
+        });
+      }
     }
-    console.log('received end game with ', data);
-    
   },
   
   render: function(){
@@ -182,24 +186,8 @@ var App = React.createClass({
         </div>
         );
     }
-    // game stopped - trying to login before timer has begun/between games
-    if (this.state.status === 'game_stopped'){
-      return (
-        <div>
-          <h1>Hang tight! The next game will start shortly.</h1>
-        </div>
-        )
-    }
-    //game ended
-    if (this.state.status === 'game_ended'){
-      return (
-        <div>
-          <h1>Game has ended and I don't know how to announce the winner yet!</h1>
-        </div>
-        )
-    }
-    // game winner
-    if (this.state.status === 'game_winner'){
+        // game winner
+    if (this.state.substatus === 'game_winner'){
       return (
         <div>
           <h1>Winner! Winner! Chicken Dinner!</h1>
@@ -207,10 +195,18 @@ var App = React.createClass({
         );
     }
     //game losers
-    if (this.state.status === 'game_loser'){
+    if (this.state.substatus === 'game_loser'){
       return (
         <div>
           <h1>Not fast enough! You lose!</h1>
+        </div>
+        );
+    }
+    //game ended
+    if (this.state.status === 'game_ended'){
+      return (
+        <div>
+          <h1>Hang tight! The game will start soon!</h1>
         </div>
         );
     }
