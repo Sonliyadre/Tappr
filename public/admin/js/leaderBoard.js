@@ -4,6 +4,11 @@ var ReactDOM = require('react-dom');
 
 
 var LeaderBoard = React.createClass({
+    getInitialState(){
+        return {
+            winner: {}
+        }
+    },
     render: function() {
         
         this.props.scores.sort(
