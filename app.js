@@ -86,7 +86,7 @@ io.on('connection', function(socket) {
              socket.emit(CONFIG.game.event.PLAYER_ADD, {'addition': false, 'message': 'Already in list'});
         } else {
             console.log(data.name + " was added");
-            players.push({name: data.name, socket_id: this.id, tap_count:0});
+            players.push({name: data.name, socket_id: this.id, tap_count:0, effects: []});
             socket.join(gameId);
             socket.emit(CONFIG.game.event.PLAYER_ADD, {'addition': true, 'message': 'Welcome!'});
         }
@@ -123,8 +123,77 @@ io.on('connection', function(socket) {
         if (game_status != CONFIG.game.status.STOPPED) {
             for (var index in players) {
                 if (players[index].socket_id == this.id) {
-                    players[index].tap_count++;
-                    console.log('Incremented tap count for ' + players[index].name);
+
+                    var tapIncrement = 0;
+                    if (players[index].effects.indexOf('freeze') != -1) {
+                    } else if (players[index].effects.indexOf('dbltap') != -1) {
+                        tapIncrement = 2;
+                    } else {
+                        tapIncrement = 1;
+                    }
+                    players[index].tap_count = players[index].tap_count + tapIncrement;
+                    console.log('Incremented tap count for ' + players[index].name + ' by ' + tapIncrement);
+                    
+                    // Lasting Effects
+                    if (Math.floor(Math.random()*100) == 25) {
+                        var randomEffect        = getRandomLastingEffect();
+                        var randomEffectTimeout = getRandomLastingEffectTimeout();
+
+                        players[index].power_ups.push(randomEffect);
+                        socket.emit(CONFIG.game.event.PLAYER_EFFECT_LASTING, {
+                            type:   randomEffect,
+                            status: 'active'
+                        });
+                        io.to(admin_socket_id).emit(CONFIG.game.event.PLAYER_EFFECT_LASTING, { 
+                            player: players[index], 
+                            type:   randomEffect, 
+                            status: 'active'
+                        });
+                        setTimeout(function() {
+                            players[index].power_ups.push(randomEffect);
+                            var effectIndex = players[index].power_ups.indexOf(randomEffect);
+                            if(effectIndex != -1) {
+                                players[index].power_ups.splice(effectIndex, 1);
+                            }
+                            socket.emit(CONFIG.game.event.PLAYER_EFFECT_LASTING, {
+                                type:   randomEffect, 
+                                status: 'inactive'
+                            });
+                            io.to(admin_socket_id).emit(CONFIG.game.event.PLAYER_EFFECT_LASTING, { 
+                                player: players[index], 
+                                type:   randomEffect, 
+                                status: 'inactive'
+                            });
+                        }, randomEffectTimeout);
+                    }
+
+                    // Instant Effects
+                    if (Math.floor(Math.random()*500) == 50) {
+                        var randomEffect = getRandomInstantEffet();
+                        switch(randomEffect) {
+                            case 'half':
+                                tapIncrement = Math.floor(players[index].tap_count / 2);
+                                players[index].tap_count = players[index].tap_count - tapIncrement;
+                                break;
+                            case 'leech':
+                                players[index].tap_count = players[index].tap_count - tapIncrement;
+                                var randomPlayerIndex = Math.floor(Math.random() * players.length);
+                                players[randomPlayerIndex].tap_count = players[randomPlayerIndex].tap_count + tapIncrement;
+                                break;
+                            default:
+                                break;
+                        }
+                        socket.emit(CONFIG.game.event.PLAYER_EFFECT_INSTANT, {
+                            type:  randomEffect,
+                            value: tapIncrement
+                        });
+                        io.to(admin_socket_id).emit(CONFIG.game.event.PLAYER_EFFECT_INSTANT, { 
+                            type:  randomEffect,
+                            value: tapIncrement,
+                            player: players[index]
+                        });
+                    }
+
                     if (players[index].tap_count >= CONFIG.game.maxTap) {
                         console.log('Ending Existing Game with Channel ID ' + gameId);
                         game_status = CONFIG.game.status.STOPPED;
@@ -154,4 +223,18 @@ function sanitizePlayerData() {
     return players.filter(function(el) {
         return el.name && el.tap_count;
     });
+}
+
+function getRandomLastingEffect() {
+    var possibleEffects = ['dbltap', 'freeze'];
+    return possibleEffects[Math.floor(Math.random() * possibleEffects.length)];
+}
+
+function getRandomInstantEffet() {
+    var possibleEffects = ['half', 'leech'];
+    return possibleEffects[Math.floor(Math.random() * possibleEffects.length)];
+}
+
+function getRandomLastingEffectTimeout() {
+    return Math.floor(Math.random() + CONFIG.game.effectAdditionTime) + CONFIG.game.effectMinimumTime;
 }

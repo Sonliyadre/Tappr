@@ -12,7 +12,9 @@ module.exports = {
         maxTap:              process.env.MAX_TAP              || 10,
         intervalLeaderboard: process.env.INTERVAL_LEADERBOARD || 1000,
         intervalTimer:       process.env.INTERVAL_TIMER       || 10000,
-        
+        effectMinimumTime:  2500,
+        effectAdditionTime: 2500,
+
         status: {
             STARTED: 'started',
             WAITING: 'waiting',
@@ -20,15 +22,15 @@ module.exports = {
         },
 
         event: {
-            PLAYER_ADD:       'add_player',
-            PLAYER_CLICK:     'player_click',
-            PLAYER_DATA:      'tap_update',
-            GAME_START_TIMER: 'timer_start',
-            GAME_START:       'game_start',
-            GAME_STOP:        'game_stop',
-            GAME_STATUS:      'game_status'
-            
-            
+            PLAYER_ADD:            'add_player',
+            PLAYER_CLICK:          'player_click',
+            PLAYER_DATA:           'tap_update',
+            PLAYER_EFFECT_LASTING: 'effect-lasting',
+            PLAYER_EFFECT_INSTANT: 'effect-instant',
+            GAME_START_TIMER:      'timer_start',
+            GAME_START:            'game_start',
+            GAME_STOP:             'game_stop',
+            GAME_STATUS:           'game_status'
         }
         
     },
