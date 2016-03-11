@@ -1,22 +1,25 @@
 .tap_button{
-    width: 200px;
-    height: 300px;
+    position: absolute;
+    
+    width: 500px;
+    height: 500px;
     background-color: #328E92;
     color: white;
+    font-size: 2em
 }
 .dbltap{
-    background-color: #328E92;
+    background-color: #40B844;
     color: white;
 }
 .half{
-    background-color: #328E92;
+    background-color: #4078B8;
     color: white;
 }
 .leech{
-    background-color: #328E92;
+    background-color: #CF327B;
     color: white;
 }
 .freeze{
-    background-color: #328E92;
+    background-color: #3398D6; 
     color: white;
 }
