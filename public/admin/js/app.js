@@ -2,11 +2,11 @@
 
 var React = require('react');
 var ReactDOM = require('react-dom');
-var BarChart = require("react-chartjs").bar;
 
 var AdminForm = require('./adminForm.js');
 var CountDown = require('./countDown.js');
 var LeaderBoard = require('./leaderBoard.js');
+var WinnerIs = require('./winnerIs.js');
 
 var SessionId = null;
 
@@ -20,7 +20,8 @@ var App = React.createClass({
             socket: io.connect(window.location.origin),
             socketId: null,
             leaderBoard: [],
-            game_start: false
+            game_start: false,
+            winner: {}
         };
     },
     componentDidMount: function(){
@@ -42,26 +43,40 @@ var App = React.createClass({
         
         //listen for tap_update
        this.state.socket.on('tap_update', function(data){
-       console.log(data);
-       if (that.state.status != 'stop'){
-           that.setState({
-               leaderBoard: data
-           });
-       }
-       else {
-           console.log('last information');
-       }
+           if (that.state.status == 'leaderBoard'){
+               that.setState({
+                   leaderBoard: data
+               });
+           } else {
+               var winner = { name:'faux', tap_count:1 };
+               
+               var sortData = function(a, b){
+                   return(a.tap_count - b.tap_count);
+               }
+                data.sort(sortData);
+                
+                winner= data.pop()
+
+               
+               // Loop a travers les objets dans data
+               // retourner dans variable winner celui qui a le plus haut tap_count
+               
+               
+               console.log(data);
+    
+               that.setState({
+                   status: 'winnerIs',
+                   winner: winner
+               });
+           }
        });
            
        //listen for game_stop
        this.state.socket.on('game_stop', function(data){
            that.setState({
                status: 'stop'
-           })
-           setTimeout(function(){
-               that.state.socket.emit('tap_update');
-           },1000)
-               
+           });
+           that.state.socket.emit('tap_update');
        });
             
     },
@@ -86,6 +101,7 @@ var App = React.createClass({
       this.state.socket.emit('timer_start');
     },
     render: function(){
+        console.log('Rendering with status ' + this.state.status);
         var socketId = this.state.socketId;
         switch(this.state.status) {
             case "mounted":
@@ -96,13 +112,20 @@ var App = React.createClass({
                         <CountDown startGame={this.startGame} handleTimerSubmit={this.handleTimerSubmit} secondsRemaining="10"/>
                     </div>
                 );
-                case "leaderBoard":
-                    return (
-                        <div>
-                         <LeaderBoard scores={this.state.leaderBoard}/>   
-                        </div>
-                        
-                        );
+            case "leaderBoard":
+            case "stop":
+                return (
+                    <div>
+                     <LeaderBoard scores={this.state.leaderBoard}/>   
+                    </div>
+                    );
+            case "winnerIs":
+                console.log('WE SHOULD BE HERE');
+                return (
+                    <div>
+                    <WinnerIs winner={this.state.winner}/>
+                    </div>
+                );
             default:
                 return (
                     <div>App State Status {this.state.status} Is Not Defined</div>
@@ -110,7 +133,7 @@ var App = React.createClass({
         }
     }
 });
-
+////
 
 ReactDOM.render(<App />, document.getElementById('app'));
 
