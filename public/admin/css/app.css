@@ -1,23 +1,24 @@
-/*.time{
+.time{
     font-size: 100px;
     color: #FFF;
-    background-color: #D7263D;
+    background-color: #79AD59;
     height: 130px;
     width: 300px;
-    margin-left: 520px;
+    margin-left: 550px;
     -moz-border-radius:75px;
     -webkit-border-radius: 75px;
     border-radius: 75px;
-    border: 10px solid #D7263D; 
+    border: 10px solid #79AD59; 
+    font-family: 'Lato'
     
 }
 
 div{
-    padding-top: 25px;
+    padding-top: 10px;
     padding-bottom: 30px;
 } 
 
-input {
+/*input {
     font-size: 40px;
     font-family: 'Lato', sans-serif;
     border: 2px solid #D7263D;
@@ -26,20 +27,77 @@ input {
     color: #FFF;
     padding: 10px;
     cursor: pointer;
+}*/
+
+.counter {
+    text-align: center;
 }
-*/
+
+
+h1 {
+    font-family: 'Lato';
+    font-size: 60px;
+    color: #79AD59;
+}
+
+h2 {
+    font-family: 'Lato';
+    font-size: 60px;
+    color: #79AD59;
+}
+
+.button {
+    border: 2px solid #D7263D;
+    border-radius: 25px;
+    background-color: #D7263D;
+    font-size: 25px;
+    color: #FFF;
+}
+
+.buttonAdmin{
+    border: 2px solid #79AD59;
+    background-color: #FFF;
+    height: 30px;
+    width: 50px;
+}
+
+.buttonAdmin:hover {
+    background-color: #79AD59;
+    color: #FFF;
+}
+
+.adminInput {
+    border: 2px solid #79AD59;
+    height: 30px;
+    width: 100px;
+    
+}
+
+.adminForm {
+    text-align: center;
+}
+
+.labelAdmin {
+    font-family: 'Lato';
+}
 
 .leaderboard {
     display: flex;
     height: 300px;
     align-items: flex-end;
-    border: 2px solid blue;
 }
 
 .leaderboard > div{
     flex: 1;
-    border: 2px solid red;
     transition: height 300ms ease-in;
-    background-color: #0B7A75;
+    background-color: #79AD59;
     font-family: 'Lato', sans-serif;
+    color: white;
+    font-size: 25px;
+    border-radius: 25px;
+}
+
+.winner {
+    text-align: center;
+    font-family: 'Open Sans';
 }

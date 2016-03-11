@@ -37,18 +37,18 @@ var AdminForm = React.createClass({
     },
     render : function (){
         return (
-            <div>
+            <div className="adminForm">
             <h1>Tappr Admin</h1>
             <form>
             <p>
-              <label htmlFor="username">Username</label><br/>
-              <input type="password" ref="username" placeholder="Username" />
+              <label className="labelAdmin" htmlFor="username">Username</label><br/>
+              <input className="adminInput" type="password" ref="username" placeholder="Username" />
               </p>
               <p>
-              <label htmlFor="password">Password</label><br/>
-              <input type="password" ref="password" placeholder="Password" />
+              <label className="labelAdmin" htmlFor="password">Password</label><br/>
+              <input className="adminInput" type="password" ref="password" placeholder="Password" />
               </p>
-              <input className="button" type="button" value="LOGIN" onClick={this.handleSubmit}/>
+              <input className="buttonAdmin" type="button" value="LOGIN" onClick={this.handleSubmit}/>
             </form>
             </div>
             );

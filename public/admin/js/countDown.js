@@ -29,11 +29,11 @@ var CountDown = React.createClass({
   render: function() {
     console.log(this.state)
     return (
-      <div>
-      <div>It's time for you to register at this url:</div>
-      <div>Game will start in:</div> 
+      <div className="counter">
+      <h2>It's time for you to register at this url:</h2>
+      <h1>Game will start in:</h1> 
       <div className="time"><span>{this.state.secondsRemaining}</span></div> 
-      <div>seconds</div>
+      <h2>seconds</h2>
       <input className="button" type="button" value="Start the Game" onClick={this.handleTimerSubmit}/>
       </div>
     );
