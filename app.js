@@ -184,6 +184,14 @@ io.on('connection', function(socket) {
                                 var randomPlayerIndex = Math.floor(Math.random() * players.length);
                                 players[randomPlayerIndex].tap_count = players[randomPlayerIndex].tap_count + tapIncrement;
                                 break;
+                            case 'plusTen':
+                                tapIncrement = 10;
+                                players[index].tap_count = players[index].tap_count + tapIncrement;       // NEED TO CHECK THIS
+                                break;
+                            case 'loseTen':
+                                tapIncrement = -10;
+                                players[index].tap_count = players[index].tap_count + tapIncrement;       // NEED TO CHECK THIS
+                                break;
                             default:
                                 break;
                         }
