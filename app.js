@@ -27,6 +27,7 @@ var options = {
 
 var gameId              = null;
 var leaderboardInterval = null;
+var startGameTimeout    = null;
 var game_status         = CONFIG.game.status.STOPPED;
 
 var players         = [];
@@ -34,9 +35,18 @@ var admin_socket_id = null;
 
 app.use(express.static('public', options));
 
+function resetGame() {
+    io.emit(CONFIG.game.event.GAME_RESTART);
+    clearTimeout(startGameTimeout);
+    clearInterval(leaderboardInterval);
+    players = [];
+}
+
 app.post('/admin/login', function (req, res) {
     var isAuthenticated = false;
     if (req.body.username == CONFIG.credentials.username && req.body.password == CONFIG.credentials.password) {
+        resetGame();
+        game_status = CONFIG.game.status.STOPPED;
         isAuthenticated = true;
         admin_socket_id = '/#' + req.body.socketId;
     }
@@ -94,22 +104,18 @@ io.on('connection', function(socket) {
     });
 
     socket.on(CONFIG.game.event.GAME_START_TIMER, function(data) {
-        if (admin_socket_id === this.id && game_status === CONFIG.game.status.STOPPED) {
-            players     = [];
-            game_status = CONFIG.game.status.WAITING;
-            gameId      = generateUniqueGameId();
-                
-            console.log('Starting New Game with Channel ID ' + gameId);
-            setTimeout(function() {
-                game_status = CONFIG.game.status.STARTED;
-                io.to(admin_socket_id).emit(CONFIG.game.event.GAME_START, {max: CONFIG.game.maxTap});
-                io.to(gameId).emit(CONFIG.game.event.GAME_START);
-                leaderboardInterval = setInterval(function() {
-                    io.to(admin_socket_id).emit(CONFIG.game.event.PLAYER_DATA, sanitizePlayerData());
-                }, CONFIG.game.intervalLeaderboard);
-            }, CONFIG.game.intervalTimer);
-        }
-    
+        resetGame();
+        game_status = CONFIG.game.status.WAITING;
+        gameId      = generateUniqueGameId();
+        console.log('Starting New Game with Channel ID ' + gameId);
+        startGameTimeout = setTimeout(function() {
+            game_status = CONFIG.game.status.STARTED;
+            io.to(admin_socket_id).emit(CONFIG.game.event.GAME_START, {max: CONFIG.game.maxTap});
+            io.to(gameId).emit(CONFIG.game.event.GAME_START);
+            leaderboardInterval = setInterval(function() {
+                io.to(admin_socket_id).emit(CONFIG.game.event.PLAYER_DATA, sanitizePlayerData());
+            }, CONFIG.game.intervalLeaderboard);
+        }, CONFIG.game.intervalTimer);
     });
     
     socket.on(CONFIG.game.event.PLAYER_DATA, function(data) {

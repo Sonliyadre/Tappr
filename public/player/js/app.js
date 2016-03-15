@@ -59,6 +59,7 @@ var App = React.createClass({
       socket.on('add_player', this.handleAddPlayerSocketEvent);
       socket.on('game_start', this.handleStartGameSocketEvent);
       socket.on('game_status', this.handleCheckGameStatus);
+      socket.on('game_restart', this.handleGameRestart);
       socket.on('tap_update', this.handleGameWinner);
       socket.on('effect-lasting', this.handleEffectLasting);
       socket.on('effect-instant', this.handleEffectInstant);
@@ -107,6 +108,17 @@ var App = React.createClass({
           });
      }
     }
+  },
+  handleGameRestart: function(data) {
+    console.log('received game restart');
+    this.setState({
+      player: {name: null, valid:false}, 
+      status: 'loading',
+      substatus: 'none',
+      calculated: true,
+      input: "",
+      effectStatus: []
+    });//
   },
   //When I get a confirmation from the server that the username is unique
   handleAddPlayerSocketEvent: function(data) {

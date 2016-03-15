@@ -71,28 +71,17 @@ var App = React.createClass({
                    leaderBoard: data
                });
            } else {
-               leaderboardMusic.stop();
-               applause.play();
-               var winner = { name:'faux', tap_count:1 };
+                   leaderboardMusic.stop();
+                   applause.play();
+                   var sortData = function(a, b){
+                       return(b.tap_count - a.tap_count);
+                   }
+                   data.sort(sortData);
+                   that.setState({
+                       status: 'winnerIs',
+                       winner: data[0]
+                   });
                
-               var sortData = function(a, b){
-                   return(a.tap_count - b.tap_count);
-               }
-                data.sort(sortData);
-                
-                winner= data.pop();//
-
-               
-               // Loop a travers les objets dans data
-               // retourner dans variable winner celui qui a le plus haut tap_count
-               
-               //////
-               console.log(data);
-    
-               that.setState({
-                   status: 'winnerIs',
-                   winner: winner
-               });
            }
        });
            
@@ -123,6 +112,12 @@ var App = React.createClass({
         });
     },
     handleTimerSubmit: function(){
+      this.setState({
+          status: 'loggedIn',
+          leaderBoard: [],
+          game_start: false,
+          winner: {}
+      });
       this.state.socket.emit('timer_start');
     },
     render: function(){
@@ -141,7 +136,6 @@ var App = React.createClass({
                      <LeaderBoard max={this.state.max} scores={this.state.leaderBoard}/>   
                     );
             case "winnerIs":
-                console.log('WE SHOULD BE HERE');
                 return (
                     <WinnerIs winner={this.state.winner}/>
                 );

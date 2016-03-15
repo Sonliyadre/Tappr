@@ -32,7 +32,8 @@ module.exports = {
             GAME_START_TIMER:      'timer_start',
             GAME_START:            'game_start',
             GAME_STOP:             'game_stop',
-            GAME_STATUS:           'game_status'
+            GAME_STATUS:           'game_status',
+            GAME_RESTART:          'game_restart'
         }
         
     },
