@@ -1,5 +1,8 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
+var $ = require('jquery');
+var injectTapEventPlugin = require("react-tap-event-plugin");
+injectTapEventPlugin();
 
 var App = React.createClass({
   getInitialState: function(){
@@ -23,7 +26,7 @@ var App = React.createClass({
       socket.on('effect-lasting', this.handleEffectLasting);
       socket.on('effect-instant', this.handleEffectInstant);
       this.setState({
-        status: 'login',
+        status: 'game_ended',
         socket: socket
       });
      
@@ -108,7 +111,11 @@ var App = React.createClass({
     }
   },
   // When someone taps, I send a click notification to the server
-  handleTap: function(event){
+  handleClick: function(event){
+    event.preventDefault();
+    this.state.socket.emit('player_click');
+  },
+  handleTouchTap: function(event){
     event.preventDefault();
     this.state.socket.emit('player_click');
   },
@@ -192,19 +199,22 @@ var App = React.createClass({
     // check if game has already started
     if (this.state.status === 'game_already_started'){
       return (
-        <div>
-          <h1>Sorry! The game has already started. Wait here for the next game to start.</h1>
+        <div className='game_started'>
+          <h1 className='title'>Cheeky Beavers</h1>
+          <h3 className='subTitle'>Sorry! The game has already started. Wait here for the next game to start.</h3>
+          <p className= 'Developed by Sonriyadre for DecodeMTL'></p>
         </div>
         );
     }
     //login form
     if (this.state.status === 'login'){
       return (
-        <div>
-          <h2>Pick a name, any name.</h2>
+        <div className='login_page'>
+          <h1 className='title'>Cheeky Beavers</h1>
+          <h2 className='subTitle'>Pick a name, any name!</h2>
           <form className="login">
-              <input className="login_Name" type="text" onChange={this.handleChange} value={this.state.input}/>
-              <button className='login' onClick={this.handleSubmit}>Play!</button>
+              <input className="login_name" type="text" onChange={this.handleChange} value={this.state.input}/>
+              <button id='login_button' onClick={this.handleSubmit}>Play!</button>
           </form>
         </div>
         );
@@ -212,60 +222,85 @@ var App = React.createClass({
     //waiting page
     if (this.state.status === 'waiting'){
       return (
-        <h1>Hang tight! The game will start soon.</h1>
+        <div className='waiting_page'>
+          <h1 className='title'>Cheeky Beavers</h1>
+          <h3 className='subTitle'>We're waiting for more players to join. But while since we're here...</h3>
+          <p className ='game_instructions_title'>Instructions</p>
+          <p className="game_instructions">You're a cheeky beaver! Tap your beaver (don't be gross) to build your dam.</p> 
+          <p className="game_instructions">Watch your dam get bigger on the big screen, but watch out for floods, other cheeky beavers, and the cold! </p>
+          <p className="game_instructions">Keep an eye out for other power ups that will help you build your dam faster. First beaver to build a dam wins.</p>
+        </div>
         );
     }
     // bad username
     if (this.state.status === 'bad_name'){
       return (
-        <div>
-          <h2>Sorry! That name is already taken! Try being more original.</h2>
+        <div className='bad_name'>
+          <h1 className='title'>Cheeky Beavers</h1>
+          <h3 className='subTitle'>Sorry! That name is already taken! Try being more original.</h3>
           <form className="login">
-              <input className="login_Name" type="text" onChange={this.handleChange} value={this.state.input}/>
-              <button className='login' onClick={this.handleSubmit}>Play!</button>
+              <input className="login_name" type="text" onChange={this.handleChange} value={this.state.input}/>
+              <button className='login_button' onClick={this.handleSubmit}>Play!</button>
           </form>
         </div>
         );
     }
     //game started tap game
-    if (this.state.status === 'started'){
+     if (this.state.status === 'started'){
+        var buttonImg = '/player/images/normalBeaverButton-1.png';
         var buttonString = 'Tapity tap tap!';
         if (this.state.effectStatus.indexOf('freeze') !== -1){
-          buttonString = "You're frozen! Tappy no worky."
+          buttonImg = '/player/images/icedBeaverButton.png';
+          buttonString = "You're frozen! Tappy no worky.";
         } else if (this.state.effectStatus.indexOf('half') !== -1){
-          buttonString = "Goodbye taps! Half your taps are lost"
+          buttonString = "Dam you! You've lost half your dam!";
         } else if (this.state.effectStatus.indexOf('leech') !== -1){
-          buttonString = "Someone's stolen your tap!"
+          buttonImg = '/player/images/cheekyBeaverButton.png';
+          buttonString = "Someone is stealing your logs!";
         } else if (this.state.effectStatus.indexOf('dbltap') !== -1){
-          buttonString = 'Double time!'
+          buttonImg = '/player/images/doubleTapButton.png';
+          buttonString = "Look at you go! You're building twice as fast!";
+        }
+        else if (this.state.effectStatus.indexOf('plusTen') !== -1){
+          buttonString = '+10 logs';
+        }
+        else if (this.state.effectStatus.indexOf('loseTen') !== -1){
+          buttonString ='-10 logs';
         }
         return (
-          <div>
-            <button className = {this.state.effectStatus.concat(['tap_button']).join(' ')} onClick={this.handleTap}>{buttonString}</button>
+          <div className= 'game_play'>
+            <input type='image' className = {this.state.effectStatus.concat(['tap_button']).join('_')} src={buttonImg} onTouchTap={this.handleTouchTap} onClick={this.handleClick}/>
+            <h3 className = 'title'>{buttonString}</h3>
           </div>
         );
     }
-        // game winner
+    // game winner
     if (this.state.substatus === 'game_winner'){
       return (
-        <div>
-          <h1>Winner! Winner! Chicken Dinner!</h1>
+        <div className='game_winner'>
+          
+          <h1 className='title'>Woooo!! You won!</h1>
+          <img src="/player/images/coupe.png"/>
         </div>
         );
     }
     //game losers
     if (this.state.substatus === 'game_loser'){
       return (
-        <div>
-          <h1>Not fast enough! You lose!</h1>
+        <div className= 'game_loser'>
+          <h1 className= 'title'>Not fast enough! You lose!</h1>
+          <img src="/player/images/cryingBeaver.png"/>
         </div>
         );
     }
     //game ended
     if (this.state.status === 'game_ended'){
       return (
-        <div>
-          <h1>Welcome to Tappr! Your game will start soon.</h1>
+        <div className='title_page'>
+          <h1 className='title'>Cheeky Beavers</h1>
+          <h3 className='subTitle'>Dam'd if you do. Dam'd if you don't.</h3>
+          <p className='title_instructions'>Your game is loading!</p>
+          <p className='footer'>Developed by Sonriyadre for DecodeMTL</p>
         </div>
         );
     }
@@ -273,6 +308,3 @@ var App = React.createClass({
 });
 
 ReactDOM.render(<App />, document.getElementById('app'));
-
-// App does not render game, goes form "Hold Horses" to "sorry game already started"
-//Check line 44
