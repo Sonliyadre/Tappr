@@ -1,25 +1,165 @@
-.tap_button{
+@import url(https://fonts.googleapis.com/css?family=Luckiest+Guy|Unkempt:400,700);
+/*General*/
+.title_page .game_started .waiting_page .bad_name .game_play{
+    display: flex;
+    flex-direction: column;
+}
+
+.title{
+    font-family: 'Luckiest Guy', cursive;
+    font-size: 2em;
+    display: flex;
+    justify-content: center;
+    color: #5A2213;
+}
+.subTitle{
+    font-family: 'Unkempt', Arial;
+    font-size: 1.75em;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    color: #945a4a;
+}
+.footer{
+    font-family: 'Unkempt', Arial;
+    font-size: 0.8em;
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    color: #5A2213;
+    padding-left: 5px;
+}
+body{
+    margin: 0;
+    padding: 0;
+}
+/*Main Page*/
+.title_page{
+    background: url('/player/images/summer_1.png') no-repeat center center;
+    background-size: cover;
+    min-width: 100vw;
+    min-height: 100vh;
+    position: fixed;
+}
+
+.title_instructions{
+    font-family: 'Unkempt', Arial;
+    font-size: 1.5em;
+    display: flex;
+    justify-content: center;
+    color: #945a4a;
+}
+
+/*Game Started*/
+.game_started {
+    background: url('/player/images/winter_3.png') no-repeat center center;
+    background-size: cover;
+    min-width: 100vw;
+    min-height: 100vh;
+    position: fixed;
+    top:0;
+    left:0;
+}
+/*Login Page*/
+.login_page, .bad_name{
+    background: url('/player/images/summer_2.png') no-repeat center center;
+    background-size: cover;
+    min-width: 100vw;
+    min-height: 100vh;
     position: absolute;
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+   
+}
+.login{
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+}
+.login_name{
+    border: 1px solid #945a4a;
+    border-radius: 0;
+    width: 200px;
+    height: 30px;
+    display: flex;
+    font-family: 'Unkempt', Arial;
+}
+#login_button{
+    background: #945a4a;
+    color: white;
+    height: 50px;
+    font-family: 'Unkempt', Arial;
+    font-size: 2em;
+    margin: 10px;
+    display: flex;
+    align-items: center;
+    border: none;
+}
+/*Waiting Page*/
+.waiting_page{
+    background: url('/player/images/winter_1blurred.png') no-repeat center center;
+    background-size: cover;
+    min-width: 100vw;
+    min-height: 100vh;
+    overflow: auto;
+}
+.game_instructions_title{
+    font-family: 'Unkempt', Arial;
+    font-size: 1.5em;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    color: #5A2213;
+}
+.game_instructions{
+    font-family: 'Unkempt', Arial;
+    font-size: 1.2em;
+    display: flex;
+    justify-content: center;
+    color: #006472;
+    padding: 5px;
     
-    width: 500px;
-    height: 500px;
-    background-color: #328E92;
-    color: white;
-    font-size: 2em
 }
-.dbltap{
-    background-color: #40B844;
-    color: white;
+
+/*Play Game*/
+.game_play{
+    background: url('/player/images/summer_1blurred.png') no-repeat center center;
+    background-size: cover;
+    min-width: 100vw;
+    min-height: 100vh;
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    -webkit-tap-highlight-color: transparent;
 }
-.half{
-    background-color: #4078B8;
-    color: white;
+
+/*Game Winner*/
+.game_winner{
+    background: url('/player/images/summer_3blurred.png') no-repeat center center;
+    background-size: cover;
+    min-width: 100vw;
+    min-height: 100vh;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
-.leech{
-    background-color: #CF327B;
-    color: white;
-}
-.freeze{
-    background-color: #3398D6; 
-    color: white;
+
+.game_loser{
+    background: url('/player/images/winter_1blurred.png') no-repeat center center;
+    background-size: cover;
+    min-width: 100vw;
+    min-height: 100vh;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
 }

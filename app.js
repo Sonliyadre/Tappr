@@ -243,7 +243,7 @@ function getRandomLastingEffect() {
 }
 
 function getRandomInstantEffet() {
-    var possibleEffects = ['half', 'leech'];
+    var possibleEffects = ['half', 'leech', 'plusTen', 'loseTen'];
     return possibleEffects[Math.floor(Math.random() * possibleEffects.length)];
 }
 
