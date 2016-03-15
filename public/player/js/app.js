@@ -11,6 +11,7 @@ var sounds = {
         }),
   plusTen: new Howler({
             urls: ['player/sounds/glass_ping-Go445-1207030150.mp3'],
+            volume: 0.25,
             loop: false
         }),
   dbltap: new Howler({
@@ -198,7 +199,7 @@ var App = React.createClass({
             effectStatus: newEffectStatus
           });
         }
-      }, 1000);
+      }, 1000);////
   },
   
  // Determines winner of game and announces on the device
@@ -225,24 +226,24 @@ var App = React.createClass({
         sounds['loser'].play();
         this.setState({
           substatus: 'game_loser',
-          calculated: true
+          calculated: true //
         });
       }
     }
   },
-  
+  ////
   render: function(){
     //check status of browser
     if (this.state.status === 'incompatible') {
       alert("Ruh Roh! It don't werk! Try a more modern browser.");
-    }
+    }//
     // check if game has already started
     if (this.state.status === 'game_already_started'){
       return (
         <div className='game_started'>
           <h1 className='title'>Cheeky Beavers</h1>
           <h3 className='subTitle'>Sorry! The game has already started. Wait here for the next game to start.</h3>
-          <p className= 'Developed by Sonriyadre for DecodeMTL'></p>
+          <p className= 'Developed by Sonliyadre for DecodeMTL'></p>
         </div>
         );
     }
@@ -340,7 +341,7 @@ var App = React.createClass({
           <h1 className='title'>Cheeky Beavers</h1>
           <h3 className='subTitle'>Dam'd if you do. Dam'd if you don't.</h3>
           <p className='title_instructions'>Your game is loading!</p>
-          <p className='footer'>Developed by Sonriyadre for DecodeMTL</p>
+          <p className='footer'>Developed by Sonliyadre for DecodeMTL</p>
         </div>
         );
     }

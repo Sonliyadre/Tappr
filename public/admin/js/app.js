@@ -80,13 +80,13 @@ var App = React.createClass({
                }
                 data.sort(sortData);
                 
-                winner= data.pop()
+                winner= data.pop();//
 
                
                // Loop a travers les objets dans data
                // retourner dans variable winner celui qui a le plus haut tap_count
                
-               
+               //////
                console.log(data);
     
                that.setState({
