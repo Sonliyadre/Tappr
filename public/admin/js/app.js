@@ -7,6 +7,23 @@ var AdminForm = require('./adminForm.js');
 var CountDown = require('./countDown.js');
 var LeaderBoard = require('./leaderBoard.js');
 var WinnerIs = require('./winnerIs.js');
+var Howler = require('howler').Howl;
+
+var waitingMusic = new Howler({
+            urls: ['/admin/sounds/bensound-theelevatorbossanova.mp3'],
+            loop: true
+        });
+
+var leaderboardMusic = new Howler({
+            urls: ['/admin/sounds/bensound-jazzyfrenchy.mp3'],
+            loop: true
+        });
+        
+
+var applause = new Howler({
+            urls: ['/admin/sounds/Audience_Applause-Matthiew11-1206899159.mp3'],
+            loop: false
+        });
 
 var SessionId = null;
 
@@ -24,6 +41,9 @@ var App = React.createClass({
             winner: {}
         };
     },
+     componentWillMount: function() {
+       waitingMusic.play()
+    },
     componentDidMount: function(){
         var that = this;
         
@@ -36,8 +56,11 @@ var App = React.createClass({
         });
         //listen for game_start
         this.state.socket.on('game_start', function(data){
+            waitingMusic.stop();
+           leaderboardMusic.play();
             that.setState({
-                status: 'leaderBoard'
+                status: 'leaderBoard',
+                max: data.max
             })
         });
         
@@ -48,6 +71,8 @@ var App = React.createClass({
                    leaderBoard: data
                });
            } else {
+               leaderboardMusic.stop();
+               applause.play();
                var winner = { name:'faux', tap_count:1 };
                
                var sortData = function(a, b){
@@ -108,23 +133,17 @@ var App = React.createClass({
                 return (<AdminForm socketId={socketId} handleSuccessfulAdminLogin={this.handleSuccessfulAdminLogin} handleFailedAdminLogin={this.handleFailedAdminLogin} />);
             case "loggedIn":
                 return (
-                    <div>{/*Logged In as {this.state.admin.username}*/}
-                        <CountDown startGame={this.startGame} handleTimerSubmit={this.handleTimerSubmit} secondsRemaining="10"/>
-                    </div>
+                    <CountDown startGame={this.startGame} handleTimerSubmit={this.handleTimerSubmit} secondsRemaining="10"/>
                 );
             case "leaderBoard":
             case "stop":
                 return (
-                    <div>
-                     <LeaderBoard scores={this.state.leaderBoard}/>   
-                    </div>
+                     <LeaderBoard max={this.state.max} scores={this.state.leaderBoard}/>   
                     );
             case "winnerIs":
                 console.log('WE SHOULD BE HERE');
                 return (
-                    <div>
                     <WinnerIs winner={this.state.winner}/>
-                    </div>
                 );
             default:
                 return (
@@ -136,6 +155,10 @@ var App = React.createClass({
 ////
 
 ReactDOM.render(<App />, document.getElementById('app'));
+
+
+
+/*ReactDOM.render(<WinnerIs winner={{name: 'Sonia'}}/>, document.getElementById('app'));*/
 
 
 

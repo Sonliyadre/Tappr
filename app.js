@@ -101,7 +101,7 @@ io.on('connection', function(socket) {
             console.log('Starting New Game with Channel ID ' + gameId);
             setTimeout(function() {
                 game_status = CONFIG.game.status.STARTED;
-                io.to(admin_socket_id).emit(CONFIG.game.event.GAME_START);
+                io.to(admin_socket_id).emit(CONFIG.game.event.GAME_START, {max: CONFIG.game.maxTap});
                 io.to(gameId).emit(CONFIG.game.event.GAME_START);
                 leaderboardInterval = setInterval(function() {
                     io.to(admin_socket_id).emit(CONFIG.game.event.PLAYER_DATA, sanitizePlayerData());

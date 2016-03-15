@@ -41,11 +41,9 @@ var AdminForm = React.createClass({
             <h1>Tappr Admin</h1>
             <form>
             <p>
-              <label className="labelAdmin" htmlFor="username">Username</label><br/>
               <input className="adminInput" type="password" ref="username" placeholder="Username" />
               </p>
               <p>
-              <label className="labelAdmin" htmlFor="password">Password</label><br/>
               <input className="adminInput" type="password" ref="password" placeholder="Password" />
               </p>
               <input className="buttonAdmin" type="button" value="LOGIN" onClick={this.handleSubmit}/>

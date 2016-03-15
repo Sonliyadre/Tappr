@@ -1,22 +1,44 @@
 .time{
     font-size: 100px;
-    color: #FFF;
-    background-color: #79AD59;
-    height: 130px;
-    width: 300px;
-    margin-left: 550px;
-    -moz-border-radius:75px;
-    -webkit-border-radius: 75px;
-    border-radius: 75px;
-    border: 10px solid #79AD59; 
-    font-family: 'Lato'
-    
+    color: #000;
+    font-family: 'Lato';
+}
+html, body {
+    margin: 0;
 }
 
-div{
-    padding-top: 10px;
-    padding-bottom: 30px;
-} 
+.adminForm {
+    background-image: url(https://final-project-decodemtl-somaba-1.c9users.io/admin/img/TAPPR_background1-wide.png);
+    background-size: cover;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.waiting, .winner {
+    /*background-image: url(http://placekitten.com/g/600/300);*/
+    background-size: cover;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.waiting {
+    background-image: url(https://final-project-decodemtl-somaba-1.c9users.io/admin/img/TAPPR_CountDownBG_complete.png);
+    background-size: cover;
+}
+
+.winner {
+    background-image: url(https://final-project-decodemtl-somaba-1.c9users.io/admin/img/TAPPR_background1-wide-blur.png);
+    background-size: cover;
+}
+
+
 
 /*input {
     font-size: 40px;
@@ -31,34 +53,40 @@ div{
 
 .counter {
     text-align: center;
+    
 }
 
+h1, h2{
+    text-align: center;
+}
 
 h1 {
     font-family: 'Lato';
-    font-size: 60px;
-    color: #79AD59;
+    font-size: 40px;
+    color: #3A6046;
 }
 
 h2 {
     font-family: 'Lato';
-    font-size: 60px;
+    font-size: 30px;
     color: #79AD59;
 }
 
 .button {
-    border: 2px solid #D7263D;
-    border-radius: 25px;
-    background-color: #D7263D;
+    border: 2px solid #B1DCE3;
+    background-color: #FFF;
     font-size: 25px;
-    color: #FFF;
+    color: #B1DCE3;
+    padding: 10px;
 }
 
 .buttonAdmin{
     border: 2px solid #79AD59;
     background-color: #FFF;
     height: 30px;
-    width: 50px;
+    width: 220px;
+    font-size: 15px;
+    color: lightgray;
 }
 
 .buttonAdmin:hover {
@@ -69,7 +97,7 @@ h2 {
 .adminInput {
     border: 2px solid #79AD59;
     height: 30px;
-    width: 100px;
+    width: 220px;
     
 }
 
@@ -77,27 +105,76 @@ h2 {
     text-align: center;
 }
 
-.labelAdmin {
-    font-family: 'Lato';
-}
 
+
+/*LEADERBOARD2*/
+/*
 .leaderboard {
     display: flex;
     height: 300px;
     align-items: flex-end;
+    border: 2px solid blue;
 }
 
 .leaderboard > div{
     flex: 1;
+    border: 2px solid red;
     transition: height 300ms ease-in;
-    background-color: #79AD59;
+    background-color: #0B7A75;
     font-family: 'Lato', sans-serif;
-    color: white;
-    font-size: 25px;
-    border-radius: 25px;
+}*/
+
+/*Paule's new CSS*/
+/*LEADERBOARD*/
+
+.logs {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  width: 100vw;
+  height: 100vh;
+  background-image: url(https://final-project-decodemtl-somaba-1.c9users.io/admin/img/TAPPR_LeaderBoardBG.png);
+  background-size: cover;
 }
 
+.log {
+  display: flex;
+  flex-direction: column;
+  width: 100px;
+  margin-right: 20px;
+}
+
+.log_top {
+  height: 18px;
+  background: url(https://final-project-decodemtl-somaba-1.c9users.io/admin/img/_log_top.png) repeat center;
+}
+
+.log_body {
+  flex: 1;
+  background: url(https://final-project-decodemtl-somaba-1.c9users.io/admin/img/log_body.png) repeat center;
+}
+
+.log_bottom {
+  height: 61px;
+  background: url(https://final-project-decodemtl-somaba-1.c9users.io/admin/img/log_bottom.png) repeat center;
+}
+
+.log_bottom > p {
+    text-align: center;
+    margin-top: 25px;
+    color: #FFF;
+    font-size: 25px;
+    font-family: 'Lato';
+}
+
+/*WINNER*/
 .winner {
     text-align: center;
     font-family: 'Open Sans';
+    font-size: 80px;
+    color: #000;
+}
+
+span {
+    color: #F47C00;
 }

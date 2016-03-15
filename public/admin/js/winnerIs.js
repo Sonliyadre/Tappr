@@ -7,8 +7,8 @@ var WinnerIs = React.createClass({
     render: function() {
         return (
             <div className="winner">
-                        <h1>The winner is: {this.props.winner.name} </h1>
-                       <img src="/admin/img/coupe.png"/>
+                <h1 className="winner">The winner is: <span>{this.props.winner.name}</span></h1>
+                <div><img src="/admin/img/winnerBeaver.png"/></div>
             </div>);
     }
 })
