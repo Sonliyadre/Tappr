@@ -52,7 +52,7 @@ body{
 }
 
 /*Game Started*/
-.game_started{
+.game_started {
     background: url('/player/images/winter_3.png') no-repeat center center;
     background-size: cover;
     min-width: 100vw;
@@ -62,7 +62,7 @@ body{
     left:0;
 }
 /*Login Page*/
-.login_page{
+.login_page, .bad_name{
     background: url('/player/images/summer_2.png') no-repeat center center;
     background-size: cover;
     min-width: 100vw;
@@ -135,6 +135,7 @@ body{
     justify-content: center;
     flex-direction: column;
     text-align: center;
+    -webkit-tap-highlight-color: transparent;
 }
 
 /*Game Winner*/
@@ -160,4 +161,5 @@ body{
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    text-align: center;
 }

@@ -1,8 +1,44 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-var $ = require('jquery');
+var Howler = require('howler').Howl;
 var injectTapEventPlugin = require("react-tap-event-plugin");
 injectTapEventPlugin();
+
+var sounds = {
+  freeze: new Howler({
+            urls: ['player/sounds/flyby-Conor-1500306612.mp3'],
+            loop: false
+        }),
+  plusTen: new Howler({
+            urls: ['player/sounds/glass_ping-Go445-1207030150.mp3'],
+            loop: false
+        }),
+  dbltap: new Howler({
+            urls: ['player/sounds/Power-Up-KP-1879176533.mp3'],
+            loop: false
+        }),
+  leech: new Howler({
+            urls: ['player/sounds/Slap-SoundMaster13-49669815.mp3'],
+            loop: false
+        }),
+  loseTen: new Howler({
+            urls: ['player/sounds/Swords_Collide-Sound_Explorer-2015600826.mp3'],
+            loop: false
+        }),
+  half: new Howler({
+            urls: ['player/sounds/Water Noise-SoundBible.com-204152072 (mp3cut.net).mp3'],
+            loop: false
+        }),
+  winner: new Howler({
+            urls: ['player/sounds/Short_triumphal_fanfare-John_Stracke-815794903.mp3'],
+            loop: false,
+            volume: 1
+        }),
+  loser: new Howler({
+            urls: ['player/sounds/Sad_Trombone-Joe_Lamb-665429450.mp3'],
+            loop: false
+        }) 
+};
 
 var App = React.createClass({
   getInitialState: function(){
@@ -128,6 +164,7 @@ var App = React.createClass({
       console.log(data.type + ' is now active');
       var newEffectStatus = this.state.effectStatus;
       newEffectStatus.push(data.type);
+      sounds[data.type].play();
       this.setState({
         effectStatus: newEffectStatus
       });
@@ -149,6 +186,7 @@ var App = React.createClass({
       var that = this;
       var newEffectStatus = this.state.effectStatus;
       newEffectStatus.push(data.type);
+      sounds[data.type].play();
       this.setState({
         effectStatus: newEffectStatus
       });
@@ -177,12 +215,14 @@ var App = React.createClass({
         }
       }
       if (myTapCount >= maxTapCount){
+        sounds['winner'].play();
         this.setState({
           substatus: 'game_winner',
           calculated: true
         });
       }
       else {
+        sounds['loser'].play();
         this.setState({
           substatus: 'game_loser',
           calculated: true
@@ -224,7 +264,7 @@ var App = React.createClass({
       return (
         <div className='waiting_page'>
           <h1 className='title'>Cheeky Beavers</h1>
-          <h3 className='subTitle'>We're waiting for more players to join. But while since we're here...</h3>
+          <h3 className='subTitle'>We're waiting for more players to join. But since we're here...</h3>
           <p className ='game_instructions_title'>Instructions</p>
           <p className="game_instructions">You're a cheeky beaver! Tap your beaver (don't be gross) to build your dam.</p> 
           <p className="game_instructions">Watch your dam get bigger on the big screen, but watch out for floods, other cheeky beavers, and the cold! </p>
