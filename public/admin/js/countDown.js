@@ -8,28 +8,31 @@ var CountDown = React.createClass({
       secondsRemaining: 0,
       url: window.location.protocol + '//' + window.location.hostname,
       status: 'started',
-      players: null
+      players: null,
+      interval: null
     };
   },
   tick: function() {
     this.setState({secondsRemaining: this.state.secondsRemaining - 1});
     if (this.state.secondsRemaining <= 0) {
-      clearInterval(this.interval);
+      clearInterval(this.state.interval);
     }
   },
   handleTimerSubmit: function(){
-      event.preventDefault();
-    this.interval = setInterval(this.tick, 1000);
+    event.preventDefault();
+    clearInterval(this.state.interval);
+    var interval = setInterval(this.tick, 1000);
+    this.setState({ interval: interval });
     console.log(this.props.handleTimerSubmit);
     if (this.state.status === 'started') {
       this.props.handleTimerSubmit();
     }
-    },
+  },
   componentDidMount: function() {
    this.setState({ secondsRemaining: this.props.secondsRemaining });
   },
   componentWillUnmount: function() {
-    clearInterval(this.interval);
+    clearInterval(this.state.interval);
   },
   render: function() {
     if (this.state.status === 'started') {

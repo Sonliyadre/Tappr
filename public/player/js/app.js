@@ -111,6 +111,7 @@ var App = React.createClass({
      }
     }
   },
+  //game restart
   handleGameRestart: function(data) {
     console.log('received game restart');
     this.setState({
@@ -131,9 +132,9 @@ var App = React.createClass({
        calculated: false
      });
     }
-    else {
+    else if (data.addition === false) {
       this.setState({
-        status: 'bad_name'
+        substatus: 'bad_name'
       });
     }
   },
@@ -262,11 +263,16 @@ var App = React.createClass({
         );
     }
     //login form
+    
     if (this.state.status === 'login'){
+      var login_string = 'Pick a name, any name!'
+      if (this.state.substatus === 'bad_name'){
+        login_string = 'Sorry! That name is already taken! Try being more original.';
+      }
       return (
         <div className='login_page'>
           <h1 className='title'>Cheeky Beavers</h1>
-          <h2 className='subTitle'>Pick a name, any name!</h2>
+          <h2 className='subTitle'>{login_string}</h2>
           <form className="login">
               <input className="login_name" type="text" onChange={this.handleChange} value={this.state.input}/>
               <button id='login_button' onClick={this.handleSubmit}>Play!</button>
@@ -319,8 +325,8 @@ var App = React.createClass({
         }
         return (
           <div className= 'game_play'>
-            <input type='image' className = {this.state.effectStatus.concat(['tap_button']).join('_')} src={buttonImg} onTouchTap={this.handleTouchTap} onClick={this.handleClick}/>
-            <h3 className = 'title'>{buttonString}</h3>
+            <h3 className = 'button_text'>{buttonString}</h3>
+            <input id='fade' type='image' className = {this.state.effectStatus.concat(['tap_button']).join('_')} src={buttonImg} onTouchTap={this.handleTouchTap} onClick={this.handleClick}/>
           </div>
         );
     }
@@ -328,7 +334,6 @@ var App = React.createClass({
     if (this.state.substatus === 'game_winner'){
       return (
         <div className='game_winner'>
-          
           <h1 className='title'>Woooo!! You won!</h1>
           <img src="/player/images/coupe.png"/>
         </div>
