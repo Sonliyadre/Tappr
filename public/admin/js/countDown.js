@@ -31,6 +31,7 @@ var CountDown = React.createClass({
     return (
       <div className="waiting">
       <div className="header">
+      <div className="movingCloud"><img src="/admin/img/cloud-small.png"/></div>
       <h2>It's time for you to register at this url:</h2>
       <h1>Game will start in:</h1>
       </div>

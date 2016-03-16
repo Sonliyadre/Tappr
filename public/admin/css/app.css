@@ -29,7 +29,7 @@ html, body {
 }
 
 .waiting {
-    background-image: url(https://final-project-decodemtl-somaba-1.c9users.io/admin/img/TAPPR_CountDownBG_complete.png);
+    background-image: url(https://final-project-decodemtl-somaba-1.c9users.io/admin/img/CountDown_BG_zindex0.png);
     background-size: cover;
 }
 
@@ -69,7 +69,7 @@ h1 {
 h2 {
     font-family: 'Lato';
     font-size: 30px;
-    color: #79AD59;
+    color: #FFF;
 }
 
 .button {
@@ -178,3 +178,49 @@ h2 {
 span {
     color: #F47C00;
 }
+
+.highlight {
+    color: #000;
+}
+
+.movingCloud {
+  position: relative;
+  -webkit-animation: Cloud 5s infinite;
+  -moz-animation: Cloud 5s infinite;
+  animation: Cloud 5s infinite;
+}
+
+@-webkit-keyframes Cloud {
+  0% {
+    left: 10px;
+  }
+  50% {
+    left: 2400px;
+  }
+  100% {
+    left: 10px;
+  }
+}
+@-moz-keyframes Cloud {
+  0% {
+    left: 10px;
+  }
+  50% {
+    left: 2400px;
+  }
+  100% {
+    left: 10px;
+  }
+}
+@keyframes 'Cloud' {
+  0% {
+    left: 10px;
+  }
+  50% {
+    left: 2400px;
+  }
+  100% {
+    left: 10px;
+  }
+}
+

@@ -150,9 +150,7 @@ var App = React.createClass({
 
 ReactDOM.render(<App />, document.getElementById('app'));
 
-
-
-/*ReactDOM.render(<WinnerIs winner={{name: 'Sonia'}}/>, document.getElementById('app'));*/
+/*ReactDOM.render(<CountDown winner={{name: 'Sonia'}}/>, document.getElementById('app'));*/
 
 
 

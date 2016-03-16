@@ -9,7 +9,7 @@ module.exports = {
     },
 
     game: {
-        maxTap:              process.env.MAX_TAP              || 300,
+        maxTap:              process.env.MAX_TAP              || 50,
         intervalLeaderboard: process.env.INTERVAL_LEADERBOARD || 500,
         intervalTimer:       process.env.INTERVAL_TIMER       || 10000,
         effectMinimumTime:  2500,
