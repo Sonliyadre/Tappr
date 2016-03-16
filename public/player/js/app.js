@@ -4,6 +4,8 @@ var Howler = require('howler').Howl;
 var injectTapEventPlugin = require("react-tap-event-plugin");
 injectTapEventPlugin();
 
+var Slider = require('./slider');
+
 var sounds = {
   freeze: new Howler({
             urls: ['player/sounds/flyby-Conor-1500306612.mp3'],
@@ -274,16 +276,11 @@ var App = React.createClass({
     }
     //waiting page
     if (this.state.status === 'waiting'){
-      return (
-        <div className='waiting_page'>
+      return (<div className='waiting_page'>
           <h1 className='title'>Cheeky Beavers</h1>
           <h3 className='subTitle'>We're waiting for more players to join. But since we're here...</h3>
-          <p className ='game_instructions_title'>Instructions</p>
-          <p className="game_instructions">You're a cheeky beaver! Tap your beaver (don't be gross) to build your dam.</p> 
-          <p className="game_instructions">Watch your dam get bigger on the big screen, but watch out for floods, other cheeky beavers, and the cold! </p>
-          <p className="game_instructions">Keep an eye out for other power ups that will help you build your dam faster. First beaver to build a dam wins.</p>
-        </div>
-        );
+          <Slider />
+      </div>);
     }
     // bad username
     if (this.state.status === 'bad_name'){
