@@ -10,12 +10,13 @@ module.exports = {
 
     game: {
         maxTap:              process.env.MAX_TAP              || 300,
-        intervalLeaderboard: process.env.INTERVAL_LEADERBOARD || 500,
+        intervalLeaderboard: process.env.INTERVAL_LEADERBOARD || 333,
         intervalTimer:       process.env.INTERVAL_TIMER       || 10000,
         effectMinimumTime:  2500,
         effectAdditionTime: 2500,
         effectLastingChance: 50,
         effectInstantChance: 75,
+        minimumPlayers     : 2,
 
         status: {
             STARTED: 'started',
@@ -33,7 +34,8 @@ module.exports = {
             GAME_START:            'game_start',
             GAME_STOP:             'game_stop',
             GAME_STATUS:           'game_status',
-            GAME_RESTART:          'game_restart'
+            GAME_RESTART:          'game_restart',
+            GAME_RESET_TIMER:      'game_reset_timer'
         }
         
     },

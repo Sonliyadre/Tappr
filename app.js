@@ -42,6 +42,26 @@ function resetGame() {
     players = [];
 }
 
+function startGameTimer() {
+    clearTimeout(startGameTimeout);
+    clearInterval(leaderboardInterval);
+    game_status = CONFIG.game.status.WAITING;
+    startGameTimeout = setTimeout(function() {
+        if (players.length >= CONFIG.game.minimumPlayers) {
+            game_status = CONFIG.game.status.STARTED;
+            io.to(admin_socket_id).emit(CONFIG.game.event.GAME_START, {max: CONFIG.game.maxTap});
+            io.to(gameId).emit(CONFIG.game.event.GAME_START);
+            leaderboardInterval = setInterval(function() {
+                io.to(admin_socket_id).emit(CONFIG.game.event.PLAYER_DATA, sanitizePlayerData());
+            }, CONFIG.game.intervalLeaderboard);
+        } else {
+            console.log('Not enough players; restarting timer. Registered: ' + players.length);
+            io.emit(CONFIG.game.event.GAME_RESET_TIMER, { players: players.length });
+            startGameTimer();
+        }
+    }, CONFIG.game.intervalTimer);
+}
+
 app.post('/admin/login', function (req, res) {
     var isAuthenticated = false;
     if (req.body.username == CONFIG.credentials.username && req.body.password == CONFIG.credentials.password) {
@@ -108,14 +128,7 @@ io.on('connection', function(socket) {
         game_status = CONFIG.game.status.WAITING;
         gameId      = generateUniqueGameId();
         console.log('Starting New Game with Channel ID ' + gameId);
-        startGameTimeout = setTimeout(function() {
-            game_status = CONFIG.game.status.STARTED;
-            io.to(admin_socket_id).emit(CONFIG.game.event.GAME_START, {max: CONFIG.game.maxTap});
-            io.to(gameId).emit(CONFIG.game.event.GAME_START);
-            leaderboardInterval = setInterval(function() {
-                io.to(admin_socket_id).emit(CONFIG.game.event.PLAYER_DATA, sanitizePlayerData());
-            }, CONFIG.game.intervalLeaderboard);
-        }, CONFIG.game.intervalTimer);
+        startGameTimer();
     });
     
     socket.on(CONFIG.game.event.PLAYER_DATA, function(data) {

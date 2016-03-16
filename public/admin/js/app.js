@@ -84,7 +84,17 @@ var App = React.createClass({
                
            }
        });
-           
+
+       //listen for game_timer_reset ; not enough players
+       this.state.socket.on('game_reset_timer', function(data){
+           that.setState({
+               players: data.players,
+               status: 'loggedIn'
+           });
+           that.refs.countDown.setState({secondsRemaining: 10, players: data.players, status: 'restarted'});
+           that.refs.countDown.handleTimerSubmit();
+       });
+       
        //listen for game_stop
        this.state.socket.on('game_stop', function(data){
            that.setState({
@@ -128,7 +138,7 @@ var App = React.createClass({
                 return (<AdminForm socketId={socketId} handleSuccessfulAdminLogin={this.handleSuccessfulAdminLogin} handleFailedAdminLogin={this.handleFailedAdminLogin} />);
             case "loggedIn":
                 return (
-                    <CountDown startGame={this.startGame} handleTimerSubmit={this.handleTimerSubmit} secondsRemaining="10"/>
+                    <CountDown ref="countDown" startGame={this.startGame} handleTimerSubmit={this.handleTimerSubmit} secondsRemaining="10" />
                 );
             case "leaderBoard":
             case "stop":
