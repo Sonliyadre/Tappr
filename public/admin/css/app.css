@@ -197,9 +197,7 @@ span {
   50% {
     left: 2400px;
   }
-  100% {
-    left: 10px;
-  }
+  
 }
 @-moz-keyframes Cloud {
   0% {
@@ -208,9 +206,7 @@ span {
   50% {
     left: 2400px;
   }
-  100% {
-    left: 10px;
-  }
+  
 }
 @keyframes 'Cloud' {
   0% {
@@ -219,8 +215,6 @@ span {
   50% {
     left: 2400px;
   }
-  100% {
-    left: 10px;
-  }
+
 }
 
