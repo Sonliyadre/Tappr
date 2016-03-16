@@ -1,7 +1,51 @@
+.size-small {
+font-size: 3vw;
+}
+
+.size-medium {
+  font-size: 5vw;
+}
+
+.size-large {
+  font-size: 20vw;
+}
+
+.centered {
+  text-align:center; 
+}
+
+.flex-columns {
+  display: flex;
+  flex-direction: column;
+}
+
+.text-red {
+  color: red;
+}
+
+.flex-rows {
+  display: flex;
+  flex-direction: row;
+}
+
+.movingCloud2 {
+  position: relative;
+  top: -20vh;
+}
+.header {
+  padding-top: 20vh;
+}
+span {
+  color: #FDBC1D;
+}
+
 .time{
-    font-size: 100px;
-    color: #000;
+    color: #FDBC1D;
     font-family: 'Lato';
+}
+
+.start {
+  color: #FFF;
 }
 html, body {
     margin: 0;
@@ -29,13 +73,11 @@ html, body {
 }
 
 .waiting {
-    background-image: url(https://final-project-decodemtl-somaba-1.c9users.io/admin/img/CountDown_BG_zindex0.png);
-    background-size: cover;
+    background-image: url(https://final-project-decodemtl-somaba-1.c9users.io/admin/img/TAPPR_CountDownBG_complete.png);
 }
 
 .winner {
     background-image: url(https://final-project-decodemtl-somaba-1.c9users.io/admin/img/TAPPR_background1-wide-blur.png);
-    background-size: cover;
 }
 
 
@@ -53,7 +95,6 @@ html, body {
 
 .counter {
     text-align: center;
-    
 }
 
 h1, h2{
@@ -62,30 +103,37 @@ h1, h2{
 
 h1 {
     font-family: 'Lato';
-    font-size: 40px;
-    color: #3A6046;
+    color: #F47C00;
 }
 
 h2 {
     font-family: 'Lato';
-    font-size: 30px;
     color: #FFF;
+    text-align: center;
+}
+
+div {
+    margin: 0;
 }
 
 .button {
     border: 2px solid #B1DCE3;
     background-color: #FFF;
-    font-size: 25px;
     color: #B1DCE3;
-    padding: 10px;
+    padding: 2vw;
+}
+
+.button:hover {
+    background-color: #FDBC1D;
+    color: #FFF;
 }
 
 .buttonAdmin{
     border: 2px solid #79AD59;
     background-color: #FFF;
-    height: 30px;
-    width: 220px;
-    font-size: 15px;
+    height: 5vh;
+    width: 10vw;
+    font-size: 2vw;
     color: lightgray;
 }
 
@@ -96,8 +144,8 @@ h2 {
 
 .adminInput {
     border: 2px solid #79AD59;
-    height: 30px;
-    width: 220px;
+    height: 5vh;
+    width: 10vw;
     
 }
 
@@ -161,10 +209,12 @@ h2 {
 
 .log_bottom > p {
     text-align: center;
-    margin-top: 25px;
+    margin-left: -232px;
     color: #FFF;
     font-size: 25px;
     font-family: 'Lato';
+    padding-right: 350px;
+    display: inline-flex;
 }
 
 /*WINNER*/
@@ -183,11 +233,40 @@ span {
     color: #000;
 }
 
+.winnerName {
+  font-family: 'Luckiest Guy';
+}
+
+/*VERTICAL NAMES + SCORES*/
+.vertical-text {
+  transform: rotate(90deg);
+	transform-origin: center top 0;
+	float: left;
+	width: 250px;
+}
+
 .movingCloud {
   position: relative;
-  -webkit-animation: Cloud 5s infinite;
-  -moz-animation: Cloud 5s infinite;
-  animation: Cloud 5s infinite;
+  -webkit-animation: Cloud 25s infinite;
+  -moz-animation: Cloud 25s infinite;
+  animation: Cloud 25s infinite;
+}
+
+.movingCloud2 {
+    position: relative;
+  -webkit-animation: Cloud2 25s infinite;
+  -moz-animation: Cloud2 25s infinite;
+  animation: Cloud2 25s infinite;
+  padding-left: 1000px;
+}
+
+.movingCloud3 {
+    display:inline-block;
+     position: relative;
+  -webkit-animation: Cloud3 20s infinite;
+  -moz-animation: Cloud3 20s infinite;
+  animation: Cloud3 20s infinite;
+  opacity: 0.4;
 }
 
 @-webkit-keyframes Cloud {
@@ -195,7 +274,10 @@ span {
     left: 10px;
   }
   50% {
-    left: 2400px;
+    left: 700px;
+  }
+  100% {
+    left: 10px;
   }
   
 }
@@ -204,7 +286,10 @@ span {
     left: 10px;
   }
   50% {
-    left: 2400px;
+    left: 700px;
+  }
+  100% {
+    left: 10px;
   }
   
 }
@@ -213,8 +298,84 @@ span {
     left: 10px;
   }
   50% {
-    left: 2400px;
+    left: 700px;
+  }
+  100% {
+    left: 10px;
   }
 
 }
 
+@-webkit-keyframes Cloud2 {
+  0% {
+    right: 10px;
+  }
+  50% {
+    right: 1000px;
+  }
+  100% {
+    right: 10px;
+  }
+  
+}
+@-moz-keyframes Cloud2 {
+  0% {
+    right: 10px;
+  }
+  50% {
+    right: 1000px;
+  }
+  100% {
+    right: 10px;
+  }
+  
+}
+@keyframes 'Cloud2' {
+  0% {
+    right: 10px;
+  }
+  50% {
+    right: 1000px;
+  }
+  100% {
+    right: 10px;
+  }
+
+}
+
+@-webkit-keyframes Cloud3 {
+  0% {
+    right: 10px;
+  }
+  50% {
+    right: 700px;
+  }
+  100% {
+    right: 10px;
+  }
+  
+}
+@-moz-keyframes Cloud3 {
+  0% {
+    right: 10px;
+  }
+  50% {
+    right: 700px;
+  }
+  100% {
+    right: 10px;
+  }
+  
+}
+@keyframes 'Cloud3' {
+  0% {
+    right: 10px;
+  }
+  50% {
+    right: 700px;
+  }
+  100% {
+    right: 10px;
+  }
+
+}

@@ -84,14 +84,14 @@ var App = React.createClass({
                
            }
        });
-
+        
        //listen for game_timer_reset ; not enough players
        this.state.socket.on('game_reset_timer', function(data){
            that.setState({
                players: data.players,
                status: 'loggedIn'
            });
-           that.refs.countDown.setState({secondsRemaining: 10, players: data.players, status: 'restarted'});
+           that.refs.countDown.setState({secondsRemaining: 120, players: data.players, status: 'restarted'});
            that.refs.countDown.handleTimerSubmit();
        });
        
@@ -122,14 +122,16 @@ var App = React.createClass({
         });
     },
     handleTimerSubmit: function(){
+      this.state.socket.emit('timer_start');
       this.setState({
           status: 'loggedIn',
           leaderBoard: [],
           game_start: false,
           winner: {}
       });
-      this.state.socket.emit('timer_start');
     },
+    //listen for game_restart
+    
     render: function(){
         console.log('Rendering with status ' + this.state.status);
         var socketId = this.state.socketId;
@@ -138,7 +140,7 @@ var App = React.createClass({
                 return (<AdminForm socketId={socketId} handleSuccessfulAdminLogin={this.handleSuccessfulAdminLogin} handleFailedAdminLogin={this.handleFailedAdminLogin} />);
             case "loggedIn":
                 return (
-                    <CountDown ref="countDown" startGame={this.startGame} handleTimerSubmit={this.handleTimerSubmit} secondsRemaining="10" />
+                    <CountDown ref="countDown" startGame={this.startGame} handleTimerSubmit={this.handleTimerSubmit} secondsRemaining="120" />
                 );
             case "leaderBoard":
             case "stop":
@@ -147,7 +149,7 @@ var App = React.createClass({
                     );
             case "winnerIs":
                 return (
-                    <WinnerIs winner={this.state.winner}/>
+                    <WinnerIs winner={this.state.winner} handleNewGame={this.handleTimerSubmit} />
                 );
             default:
                 return (
@@ -160,8 +162,7 @@ var App = React.createClass({
 
 ReactDOM.render(<App />, document.getElementById('app'));
 
-/*ReactDOM.render(<CountDown winner={{name: 'Sonia'}}/>, document.getElementById('app'));*/
-
+/*ReactDOM.render(<WinnerIs winner={{name: 'Sonia'}}/>, document.getElementById('app'));*/
 
 
 /*

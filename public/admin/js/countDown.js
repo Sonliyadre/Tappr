@@ -36,36 +36,38 @@ var CountDown = React.createClass({
       return (
         <div className="waiting">
         <div className="header">
-        <div className="movingCloud"><img src="/admin/img/cloud-small.png"/></div>
-        <h2>It's time for you to register at this url: {this.state.url}</h2>
-        <h1>Game will start in:</h1>
+        <h1 className="size-small">Get tappin’</h1>
+        <h2 className="size-small">{this.state.url}</h2>
         </div>
         <div className="counter">
-        <div className="time">{this.state.secondsRemaining}</div>
-        <h2>seconds</h2>
-        <input className="button" type="button" value="Start the Game" onClick={this.handleTimerSubmit}/>
+        <h1 className="start size-small">Game will start in:</h1>
+        <div className="time size-medium">{this.state.secondsRemaining}</div>
+        <h2 className="size-small">seconds</h2>
+        <input className="button size-small" type="button" value="Start the Game" onClick={this.handleTimerSubmit}/>
         </div>
+        <div className="movingCloud2"><img src="/admin/img/cloud-small.png"/></div>
+        <div className="movingCloud"><img src="/admin/img/cloud-small.png"/></div>
         </div>
       );
     } else {
        return (
         <div className="waiting">
         <div className="header">
-        <div className="movingCloud"><img src="/admin/img/cloud-small.png"/></div>
-        <h1>WE NEED MORE THAN {this.state.players} PLAYERS!</h1>
-        <h2>It's time for you to register at this url: {this.state.url}</h2>
-        <h1>Game will restart in:</h1>
+        <h1 className="size-small">WE NEED MORE THAN {this.state.players} PLAYERS!</h1>
+        <h2 className="size-small">{this.state.url}</h2>
         </div>
         <div className="counter">
-        <div className="time">{this.state.secondsRemaining}</div>
-        <h2>seconds</h2>
+        <h1 className="start size-small">Game will restart in:</h1>
+        <div className="time size-medium">{this.state.secondsRemaining}</div>
+        <h2 className="size-small">seconds</h2>
+        <input className="button size-small" type="button" value="Start the Game" onClick={this.handleTimerSubmit}/>
         </div>
+        <div className="movingCloud2"><img src="/admin/img/cloud-small.png"/></div>
+        <div className="movingCloud"><img src="/admin/img/cloud-small.png"/></div>
         </div>
       );
     }
   }
 });
 
-/*ReactDOM.render(<Countdown secondsRemaining="300" />, document.querySelector('#timer'));
-*/
 module.exports = CountDown;

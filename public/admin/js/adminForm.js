@@ -38,7 +38,7 @@ var AdminForm = React.createClass({
     render : function (){
         return (
             <div className="adminForm">
-            <h1>Tappr Admin</h1>
+            <h1 className="size-small">Tappr Admin</h1>
             <form>
             <p>
               <input className="adminInput" type="password" ref="username" placeholder="Username" />
