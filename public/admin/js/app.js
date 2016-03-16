@@ -161,7 +161,7 @@ var App = React.createClass({
 ////
 
 ReactDOM.render(<App />, document.getElementById('app'));
-
+// ReactDOM.render(<LeaderBoard max={200} scores={[{tap_count: 100, name: 'Sonia'}, {tap_count: 10, name: 'x'}]} />, document.getElementById('app'));
 /*ReactDOM.render(<WinnerIs winner={{name: 'Sonia'}}/>, document.getElementById('app'));*/
 
 

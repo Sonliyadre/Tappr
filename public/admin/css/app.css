@@ -3,7 +3,7 @@ font-size: 3vw;
 }
 
 .size-medium {
-  font-size: 5vw;
+  font-size: 7vw;
 }
 
 .size-large {
@@ -40,12 +40,12 @@ span {
 }
 
 .time{
-    color: #FDBC1D;
+    color: #006472;
     font-family: 'Lato';
 }
 
 .start {
-  color: #FFF;
+  color: #5A2213;
 }
 html, body {
     margin: 0;
@@ -102,13 +102,13 @@ h1, h2{
 }
 
 h1 {
-    font-family: 'Lato';
-    color: #F47C00;
+    font-family: 'Luckiest Guy';
+    color: #5A2213;
 }
 
 h2 {
-    font-family: 'Lato';
-    color: #FFF;
+    font-family: 'Unkempt';
+    color: #945a4a;
     text-align: center;
 }
 
@@ -121,15 +121,16 @@ div {
     background-color: #FFF;
     color: #B1DCE3;
     padding: 2vw;
+    font-family: 'Unkempt';
 }
 
 .button:hover {
-    background-color: #FDBC1D;
+    background-color: #F47C00;
     color: #FFF;
 }
 
 .buttonAdmin{
-    border: 2px solid #79AD59;
+    border: 2px solid #5A2213;
     background-color: #FFF;
     height: 5vh;
     width: 10vw;
@@ -138,12 +139,12 @@ div {
 }
 
 .buttonAdmin:hover {
-    background-color: #79AD59;
+    background-color: #945a4a;
     color: #FFF;
 }
 
 .adminInput {
-    border: 2px solid #79AD59;
+    border: 2px solid #945a4a;
     height: 5vh;
     width: 10vw;
     
@@ -210,11 +211,16 @@ div {
 .log_bottom > p {
     text-align: center;
     margin-left: -232px;
-    color: #FFF;
-    font-size: 25px;
-    font-family: 'Lato';
+    font-size: 32px;
+    font-family: 'Unkempt';
     padding-right: 350px;
     display: inline-flex;
+    color: white;
+    text-shadow: 1px 1px 1px rgba(0,0,0, 0.5);
+}
+
+span {
+    color: #5A2213;
 }
 
 /*WINNER*/
@@ -225,16 +231,16 @@ div {
     color: #000;
 }
 
-span {
-    color: #F47C00;
-}
+
 
 .highlight {
-    color: #000;
+    color: #F47C00;
+    text-shadow: 1px 1px 1px rgba(0,0,0, 0.5);
 }
 
 .winnerName {
   font-family: 'Luckiest Guy';
+  color: #5A2213;
 }
 
 /*VERTICAL NAMES + SCORES*/

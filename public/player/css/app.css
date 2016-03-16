@@ -168,6 +168,10 @@ body{
     justify-content: center;
     flex-direction: column;
 }
+.winner_beaver{
+    width: 200px;
+    height: 200px;
+}
 
 .game_loser{
     background: url('/player/images/winter_1blurred.png') no-repeat center center;

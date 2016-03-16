@@ -335,7 +335,7 @@ var App = React.createClass({
       return (
         <div className='game_winner'>
           <h1 className='title'>Woooo!! You won!</h1>
-          <img src="/player/images/coupe.png"/>
+          <img className='winner_beaver' src="/player/images/winnerBeaver.png"/>
         </div>
         );
     }

@@ -40,7 +40,7 @@ var CountDown = React.createClass({
         <div className="waiting">
         <div className="header">
         <h1 className="size-small">Get tappin’</h1>
-        <h2 className="size-small">{this.state.url}</h2>
+        <h2 className="size-small">http://cheekybeaversgame.com</h2>
         </div>
         <div className="counter">
         <h1 className="start size-small">Game will start in:</h1>
@@ -57,7 +57,7 @@ var CountDown = React.createClass({
         <div className="waiting">
         <div className="header">
         <h1 className="size-small">WE NEED MORE THAN {this.state.players} PLAYERS!</h1>
-        <h2 className="size-small">{this.state.url}</h2>
+        <h2 className="size-small">http://cheekybeaversgame.com</h2>
         </div>
         <div className="counter">
         <h1 className="start size-small">Game will restart in:</h1>

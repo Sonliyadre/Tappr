@@ -24,7 +24,7 @@ var LeaderBoard = React.createClass({
             return (<div className="log" style={{height: heightPourcentage + "%"}}>
                   <div className="log_top"></div>
                   <div className="log_body"></div>
-                  <div className="log_bottom"><p className="vertical-text">{score.name}: {score.tap_count}</p></div>
+                  <div className="log_bottom"><p className="vertical-text">{score.name + ': ' + score.tap_count}</p></div>
                 </div>);
         })
         
