@@ -111,6 +111,7 @@ var App = React.createClass({
      }
     }
   },
+  //game restart
   handleGameRestart: function(data) {
     console.log('received game restart');
     this.setState({
@@ -319,8 +320,14 @@ var App = React.createClass({
         }
         return (
           <div className= 'game_play'>
-            <input type='image' className = {this.state.effectStatus.concat(['tap_button']).join('_')} src={buttonImg} onTouchTap={this.handleTouchTap} onClick={this.handleClick}/>
-            <h3 className = 'title'>{buttonString}</h3>
+            <div className = 'game_play_text'>
+              <h3 className = 'button_text'>{buttonString}</h3>
+            </div>
+            <div className = 'game_play_button'>
+              <input type='image' className = {this.state.effectStatus.concat(['tap_button']).join('_')} src={buttonImg} onTouchTap={this.handleTouchTap} onClick={this.handleClick}/>
+            </div>
+            
+            
           </div>
         );
     }

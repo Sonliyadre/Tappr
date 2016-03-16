@@ -120,6 +120,7 @@ body{
     justify-content: center;
     color: #006472;
     padding: 5px;
+    text-align: center;
     
 }
 
@@ -136,6 +137,14 @@ body{
     flex-direction: column;
     text-align: center;
     -webkit-tap-highlight-color: transparent;
+}
+
+.button_text{
+    font-family: 'Luckiest Guy', cursive;
+    font-size: 8vw;
+    display: flex;
+    justify-content: center;
+    color: #5A2213;
 }
 
 /*Game Winner*/
