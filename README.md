@@ -13,7 +13,9 @@ DecodeMTL Final Project
 
 ==========================
 
-READ ME
+# READ ME
+
+#### Demo URL http://cheekybeaversgame.com
 
 ## Admin Login
 * POST request
@@ -109,4 +111,16 @@ tap count plus one unless there's a power-up:
 * player_effect_instant:
 
 ```{player: players[index], type:ramdomEffect, value: tapIncrement}```
+
+### Credits
+
+* Admin Front End & Graphics: Sonia Badeau (https://github.com/sonia-badeau)
+* Player Front End: Aliyah Jessa (https://github.com/aliyahmaliyah)
+* Server (Back End): Dre Storelli (https://github.com/dreboom)
+
+##### Music Credits
+Songs played on Admin/Leaderboard display courtesy of http://bensound.com.
+
+##### Sound Effect Credits
+Sound effects on player game app courtesy of http://soundbible.com.
 
