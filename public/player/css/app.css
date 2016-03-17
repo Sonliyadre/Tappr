@@ -187,3 +187,7 @@ body{
     flex-direction: column;
     text-align: center;
 }
+
+#app {
+    font-size: 3em;
+}
