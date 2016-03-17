@@ -83,15 +83,15 @@ body{
 .login_name{
     border: 1px solid #945a4a;
     border-radius: 0;
-    width: 200px;
-    height: 30px;
+    width: 75vw;
+    font-size: 2em;
     display: flex;
     font-family: 'Unkempt', Arial;
 }
 #login_button{
     background: #945a4a;
     color: white;
-    height: 50px;
+    height: auto;
     font-family: 'Unkempt', Arial;
     font-size: 2em;
     margin: 10px;
