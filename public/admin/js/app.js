@@ -123,6 +123,7 @@ var App = React.createClass({
     },
     handleTimerSubmit: function(){
       this.state.socket.emit('timer_start');
+      waitingMusic.play();
       this.setState({
           status: 'loggedIn',
           leaderBoard: [],
