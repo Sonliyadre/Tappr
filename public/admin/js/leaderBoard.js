@@ -18,7 +18,7 @@ var LeaderBoard = React.createClass({
         )
         
         var that = this;
-        var bars = this.props.scores.map(function(score){
+        var bars = this.props.scores.slice(0, 9).map(function(score){
             var heightPourcentage = (score.tap_count / that.props.max) * 100;
             return (<div className="log" style={{height: heightPourcentage + "%"}}>
                   <div className="log_top"></div>
