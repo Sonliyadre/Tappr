@@ -4,6 +4,7 @@
   "description": "DecodeMTL Final Project",
   "main": "index.js",
   "scripts": {
+    "postinstall": "npm run dist",
     "dev": "node_modules/.bin/nodemon --watch . app.js",
     "webpack": "node_modules/.bin/webpack --watch",
     "dist": "node_modules/.bin/webpack"
