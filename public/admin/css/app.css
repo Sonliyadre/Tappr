@@ -41,7 +41,8 @@ span {
 
 .time{
     color: #006472;
-    font-family: 'Lato';
+    font-family: 'Unkempt';
+    font-size: 10vw;
 }
 
 .start {
@@ -104,12 +105,14 @@ h1, h2{
 h1 {
     font-family: 'Luckiest Guy';
     color: #5A2213;
+    text-shadow: 1px 1px 1px rgba(0,0,0, 0.5);
 }
 
 h2 {
     font-family: 'Unkempt';
     color: #945a4a;
     text-align: center;
+    text-shadow: 1px 1px 1px rgba(0,0,0, 0.5);
 }
 
 div {
@@ -267,11 +270,10 @@ span {
 }
 
 .movingCloud3 {
-    display:inline-block;
-     position: relative;
-  -webkit-animation: Cloud3 20s infinite;
-  -moz-animation: Cloud3 20s infinite;
-  animation: Cloud3 20s infinite;
+    position: relative;
+  -webkit-animation: Cloud2 25s infinite;
+  -moz-animation: Cloud2 25s infinite;
+  animation: Cloud2 25s infinite;
   opacity: 0.4;
 }
 
@@ -354,7 +356,7 @@ span {
     right: 10px;
   }
   50% {
-    right: 700px;
+    right: 300px;
   }
   100% {
     right: 10px;
@@ -363,25 +365,25 @@ span {
 }
 @-moz-keyframes Cloud3 {
   0% {
-    right: 10px;
+    left: 10px;
   }
   50% {
-    right: 700px;
+    left: 300px;
   }
   100% {
-    right: 10px;
+    left: 10px;
   }
   
 }
 @keyframes 'Cloud3' {
   0% {
-    right: 10px;
+    right: 1000px;
   }
   50% {
-    right: 700px;
+    right: 10px;
   }
   100% {
-    right: 10px;
+    right: 1000px;
   }
 
 }

@@ -39,12 +39,13 @@ var CountDown = React.createClass({
       return (
         <div className="waiting">
         <div className="header">
-        <h1 className="size-small">Get tappin’</h1>
+        <h1 className="size-small">Get tappin’ on your mobile</h1>
         <h2 className="size-small">http://cheekybeaversgame.com</h2>
         </div>
         <div className="counter">
         <h1 className="start size-small">Game will start in:</h1>
-        <div className="time size-medium">{this.state.secondsRemaining}</div>
+        <div className="movingCloud"><img src="/admin/img/cloud-small.png"/></div>
+        <div className="time">{this.state.secondsRemaining}</div>
         <h2 className="size-small">seconds</h2>
         <input className="button size-small" type="button" value="Start the Game" onClick={this.handleTimerSubmit}/>
         </div>
@@ -61,6 +62,7 @@ var CountDown = React.createClass({
         </div>
         <div className="counter">
         <h1 className="start size-small">Game will restart in:</h1>
+        <div className="movingCloud"><img src="/admin/img/cloud-small.png"/></div>
         <div className="time size-medium">{this.state.secondsRemaining}</div>
         <h2 className="size-small">seconds</h2>
         <input className="button size-small" type="button" value="Start the Game" onClick={this.handleTimerSubmit}/>
