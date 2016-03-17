@@ -56,7 +56,7 @@ var App = React.createClass({
         });
         //listen for game_start
         this.state.socket.on('game_start', function(data){
-            waitingMusic.stop();
+           waitingMusic.stop();
            leaderboardMusic.play();
             that.setState({
                 status: 'leaderBoard',
@@ -123,6 +123,7 @@ var App = React.createClass({
     },
     handleTimerSubmit: function(){
       this.state.socket.emit('timer_start');
+      waitingMusic.stop();
       waitingMusic.play();
       this.setState({
           status: 'loggedIn',
