@@ -173,9 +173,9 @@ body{
     flex-direction: column;
     text-align: center;
 }
-.winner_beaver{
-    width: 200px;
-    height: 200px;
+
+.end_beaver {
+    width: 50vw;
 }
 
 .game_loser{

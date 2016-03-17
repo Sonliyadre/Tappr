@@ -337,7 +337,7 @@ var App = React.createClass({
       return (
         <div className='game_winner'>
           <h1 className='title'>Woooo!! You won!</h1>
-          <img className='winner_beaver' src="/player/images/winnerBeaver.png"/>
+          <img className='end_beaver' src="/player/images/winnerBeaver.png"/>
         </div>
         );
     }
@@ -346,7 +346,7 @@ var App = React.createClass({
       return (
         <div className= 'game_loser'>
           <h1 className= 'title'>Not fast enough! You lose!</h1>
-          <img src="/player/images/cryingBeaver.png"/>
+          <img className='end_beaver' src="/player/images/cryingBeaver.png"/>
         </div>
         );
     }
