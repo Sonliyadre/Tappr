@@ -127,6 +127,9 @@ body{
 }
 
 /*Play Game*/
+.tap_button {
+    width: 50vw;
+}
 .game_play{
     background: url('/player/images/summer_1blurred.png') no-repeat center center;
     background-size: cover;
