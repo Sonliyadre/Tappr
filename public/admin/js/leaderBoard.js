@@ -19,16 +19,15 @@ var LeaderBoard = React.createClass({
         
         var that = this;
         var bars = this.props.scores.map(function(score){
-            
             var heightPourcentage = (score.tap_count / that.props.max) * 100;
             return (<div className="log" style={{height: heightPourcentage + "%"}}>
                   <div className="log_top"></div>
                   <div className="log_body"></div>
-                  <div className="log_bottom"><p className="vertical-text">{score.name + ': ' + score.tap_count}</p></div>
+                  <div className="log_bottom"><p className="vertical-text">{score.tap_count + ' ' + score.name}</p></div>
                 </div>);
         })
         
-            return (<div className="logs">{bars} </div>);
+        return (<div className="logs">{bars} </div>);
     }
 });
 

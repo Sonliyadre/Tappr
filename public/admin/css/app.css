@@ -187,6 +187,7 @@ div {
   height: 100vh;
   background-image: url(https://final-project-decodemtl-somaba-1.c9users.io/admin/img/TAPPR_LeaderBoardBG.png);
   background-size: cover;
+  overflow:hidden;
 }
 
 .log {
@@ -194,6 +195,7 @@ div {
   flex-direction: column;
   width: 100px;
   margin-right: 20px;
+  min-height:50px;
 }
 
 .log_top {
@@ -209,17 +211,18 @@ div {
 .log_bottom {
   height: 61px;
   background: url(https://final-project-decodemtl-somaba-1.c9users.io/admin/img/log_bottom.png) repeat center;
+  white-space: nowrap;
 }
 
 .log_bottom > p {
     text-align: center;
-    margin-left: -232px;
+    margin-left: -318px;
     font-size: 32px;
     font-family: 'Unkempt';
-    padding-right: 350px;
+    min-width: 775px;
     display: inline-flex;
     color: white;
-    text-shadow: 1px 1px 1px rgba(0,0,0, 0.5);
+    text-shadow: 1px 1px 1px rgba(0,0,0, 1);
 }
 
 span {

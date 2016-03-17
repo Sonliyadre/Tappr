@@ -9,25 +9,14 @@ module.exports = {
     },
 
     game: {
-<<<<<<< HEAD
-        maxTap:              process.env.MAX_TAP              || 50,
-        intervalLeaderboard: process.env.INTERVAL_LEADERBOARD || 500,
-        intervalTimer:       process.env.INTERVAL_TIMER       || 10000,
-        effectMinimumTime:  2500,
-        effectAdditionTime: 2500,
-        effectLastingChance: 50,
-        effectInstantChance: 75,
-        minimumPlayers     : 2,
-=======
         maxTap:              process.env.MAX_TAP               || 300,
         intervalLeaderboard: process.env.INTERVAL_LEADERBOARD  || 333,
-        intervalTimer:       process.env.INTERVAL_TIMER        || 10000,
+        intervalTimer:       process.env.INTERVAL_TIMER        || 120000,
         effectMinimumTime:   process.env.EFFECT_MINIMUM_TIME   || 2500,
         effectAdditionTime:  process.env.EFFECT_ADDITION_TIME  || 2500,
         effectLastingChance: process.env.EFFECT_CHANCE_LASTING || 50,
         effectInstantChance: process.env.EFFECT_CHANCE_INSTANT || 75,
-        minimumPlayers     : process.env.MINIMUM_PLAYERS || 1,
->>>>>>> 877aa5fdc38245305cf499e07b84917bed1842b3
+        minimumPlayers     : process.env.MINIMUM_PLAYERS       || 1,
 
         status: {
             STARTED: 'started',

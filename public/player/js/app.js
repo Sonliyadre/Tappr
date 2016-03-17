@@ -274,7 +274,7 @@ var App = React.createClass({
           <h1 className='title'>Cheeky Beavers</h1>
           <h2 className='subTitle'>{login_string}</h2>
           <form className="login">
-              <input className="login_name" type="text" onChange={this.handleChange} value={this.state.input}/>
+              <input className="login_name" type="text" onChange={this.handleChange} value={this.state.input} maxLength="20" />
               <button id='login_button' onClick={this.handleSubmit}>Play!</button>
           </form>
         </div>
