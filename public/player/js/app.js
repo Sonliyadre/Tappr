@@ -323,10 +323,12 @@ var App = React.createClass({
         else if (this.state.effectStatus.indexOf('loseTen') !== -1){
           buttonString ='-10 logs';
         }
+        
+        
         return (
           <div className= 'game_play'>
             <h3 className = 'button_text'>{buttonString}</h3>
-            <input id='fade' type='image' className = {this.state.effectStatus.concat(['tap_button']).join('_')} src={buttonImg} onTouchTap={this.handleTouchTap} onClick={this.handleClick}/>
+            <input id='fade' type='image' className={'tap_button ' + this.state.effectStatus.concat(['tap_button']).join('_')} src={buttonImg} onTouchTap={this.handleTouchTap} onClick={this.handleClick}/>
           </div>
         );
     }
