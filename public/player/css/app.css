@@ -129,6 +129,8 @@ body{
 /*Play Game*/
 .tap_button {
     width: 50vw;
+    min-width: 400px;
+    min-height: 400px;
 }
 .game_play{
     background: url('/player/images/summer_1blurred.png') no-repeat center center;
@@ -193,4 +195,9 @@ body{
 
 #app {
     font-size: 3em;
+}
+
+.game_instructions > img {
+    min-width: 400px;
+    min-height: 400px;
 }
