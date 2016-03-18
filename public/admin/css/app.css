@@ -53,7 +53,7 @@ html, body {
 }
 
 .adminForm {
-    background-image: url(https://final-project-decodemtl-somaba-1.c9users.io/admin/img/TAPPR_background1-wide.png);
+    background-image: url(/admin/img/TAPPR_background1-wide.png);
     background-size: cover;
     width: 100vw;
     height: 100vh;
@@ -74,11 +74,11 @@ html, body {
 }
 
 .waiting {
-    background-image: url(https://final-project-decodemtl-somaba-1.c9users.io/admin/img/TAPPR_CountDownBG_complete.png);
+    background-image: url(/admin/img/TAPPR_CountDownBG_complete.png);
 }
 
 .winner {
-    background-image: url(https://final-project-decodemtl-somaba-1.c9users.io/admin/img/TAPPR_background1-wide-blur.png);
+    background-image: url(/admin/img/TAPPR_background1-wide-blur.png);
 }
 
 
@@ -185,7 +185,7 @@ div {
   align-items: flex-end;
   width: 100vw;
   height: 100vh;
-  background-image: url(https://final-project-decodemtl-somaba-1.c9users.io/admin/img/TAPPR_LeaderBoardBG.png);
+  background-image: url(/admin/img/TAPPR_LeaderBoardBG.png);
   background-size: cover;
   overflow:hidden;
 }
@@ -200,17 +200,17 @@ div {
 
 .log_top {
   height: 18px;
-  background: url(https://final-project-decodemtl-somaba-1.c9users.io/admin/img/_log_top.png) repeat center;
+  background: url(/admin/img/_log_top.png) repeat center;
 }
 
 .log_body {
   flex: 1;
-  background: url(https://final-project-decodemtl-somaba-1.c9users.io/admin/img/log_body.png) repeat center;
+  background: url(/admin/img/log_body.png) repeat center;
 }
 
 .log_bottom {
   height: 61px;
-  background: url(https://final-project-decodemtl-somaba-1.c9users.io/admin/img/log_bottom.png) repeat center;
+  background: url(/admin/img/log_bottom.png) repeat center;
   white-space: nowrap;
 }
 
